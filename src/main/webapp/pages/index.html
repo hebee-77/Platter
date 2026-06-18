@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platter | Premium Food Delivery</title>
+
+<link rel="stylesheet" href="css/style.css?v=1.0.1">
+<link rel="stylesheet" href="css/modal.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+	<!-- Background Blobs -->
+	<div class="blur blob-1"></div>
+	<div class="blur blob-2"></div>
+	<div class="blur blob-3"></div>
+
+	<!-- NAVBAR -->
+	<header class="navbar">
+
+		<div class="logo">
+			<span>P</span>latter
+		</div>
+
+		<nav class="nav-links">
+			<a href="home.html">Home</a> <a href="#">Restaurants</a> <a href="#">Categories</a>
+			<a href="#">Offers</a> <a href="#">Partners</a>
+		</nav>
+
+		<div class="nav-actions">
+
+			<a href="#" class="login-btn" data-modal="login" id="nav-login-btn">
+				Login </a> <a href="#" class="signup-btn" data-modal="signup"
+				id="nav-signup-btn"> Sign Up </a>
+
+			<div class="hamburger" id="hamburger" aria-label="Open menu"
+				aria-expanded="false">
+				<i class="fa-solid fa-bars"></i>
+			</div>
+
+		</div>
+
+		<!-- PREMIUM MOBILE MENU DRAWER -->
+		<div class="mobile-menu" id="mobileMenu" role="navigation"
+			aria-label="Mobile navigation">
+			<ul class="mobile-nav-list">
+				<li><a href="home.html" class="mobile-nav-link"> <span
+						class="mobile-nav-icon"><i class="fa-solid fa-house"></i></span> <span
+						class="mobile-nav-label">Home</span> <i
+						class="fa-solid fa-chevron-right mobile-nav-arrow"></i>
+				</a></li>
+				<li><a href="#" class="mobile-nav-link"> <span
+						class="mobile-nav-icon"><i class="fa-solid fa-utensils"></i></span>
+						<span class="mobile-nav-label">Restaurants</span> <i
+						class="fa-solid fa-chevron-right mobile-nav-arrow"></i>
+				</a></li>
+				<li><a href="#" class="mobile-nav-link"> <span
+						class="mobile-nav-icon"><i class="fa-solid fa-grid-2"></i></span>
+						<span class="mobile-nav-label">Categories</span> <i
+						class="fa-solid fa-chevron-right mobile-nav-arrow"></i>
+				</a></li>
+				<li><a href="#" class="mobile-nav-link"> <span
+						class="mobile-nav-icon"><i class="fa-solid fa-tag"></i></span> <span
+						class="mobile-nav-label">Offers</span> <i
+						class="fa-solid fa-chevron-right mobile-nav-arrow"></i>
+				</a></li>
+				<li><a href="#" class="mobile-nav-link"> <span
+						class="mobile-nav-icon"><i class="fa-solid fa-handshake"></i></span>
+						<span class="mobile-nav-label">Partners</span> <i
+						class="fa-solid fa-chevron-right mobile-nav-arrow"></i>
+				</a></li>
+			</ul>
+			<div class="mobile-menu-divider"></div>
+			<div class="mobile-menu-actions">
+				<a href="#" class="mobile-login-btn" data-modal="login">Login</a> <a
+					href="#" class="mobile-signup-btn" data-modal="signup">Sign Up
+					<i class="fa-solid fa-arrow-right"></i>
+				</a>
+			</div>
+		</div>
+
+	</header>
+
+	<!-- HERO -->
+	<section class="hero">
+
+		<!-- LEFT -->
+		<div class="hero-left">
+
+			<h1 id="hero-title">
+				Exceptional Food. <span>Delivered</span> In Minutes.
+			</h1>
+
+			<p id="hero-description">Order from curated restaurants, track
+				deliveries in real time, and enjoy meals crafted with care.</p>
+
+			<div class="search-container">
+
+				<div class="location-field">
+
+					<i class="fa-solid fa-location-dot location-pin"></i>
+
+					<div class="location-copy">
+						<span>Delivering to</span>
+						<textarea id="locationTextarea" placeholder="Enter delivery address..." rows="1" style="background: transparent; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 1.18rem; font-weight: 700; width: 100%; resize: none; height: 28px; line-height: 1.2; padding: 0; margin: 0; display: block; overflow: hidden;">Whitefield, Bangalore</textarea>
+					</div>
+
+				</div>
+
+				<button class="locate-btn" aria-label="Use current location">
+					<i class="fa-solid fa-location-crosshairs"></i>
+				</button>
+
+				<button class="find-btn">
+					<span>Find Restaurants</span> <i class="fa-solid fa-arrow-right"></i>
+				</button>
+
+			</div>
+
+			<div class="hero-buttons">
+
+				<button class="primary-btn">Order Now</button>
+
+				<button class="secondary-btn">Become Partner</button>
+
+			</div>
+
+		</div>
+
+		<!-- RIGHT -->
+		<div class="hero-right">
+
+			<img id="food-slider" src="images/hero/pizza.png" alt="Food Image">
+
+			<img class="rider" src="images/hero/rider.png" alt="Delivery Rider">
+
+			<div class="slider-dots">
+
+				<span class="dot active"></span> <span class="dot"></span> <span
+					class="dot"></span>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- =========================
+     FOOD CATEGORIES
+========================= -->
+
+	<section class="categories">
+
+		<div class="section-title">
+
+			<h2>Browse By Category</h2>
+
+			<p>Explore your favorite cuisines and dishes</p>
+
+		</div>
+
+		<div class="category-slider">
+
+			<div class="category-item">
+				<img src="images/categories/pizza.png" alt=""> <span>Pizza</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/burger.png" alt=""> <span>Burger</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/indian.png" alt=""> <span>Indian</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/chinese.png" alt=""> <span>Chinese</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/healthy.png" alt=""> <span>Healthy</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/dessert.png" alt=""> <span>Desserts</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/coffee.png" alt=""> <span>Coffee</span>
+			</div>
+
+			<div class="category-item">
+				<img src="images/categories/biryani.png" alt=""> <span>Biryani</span>
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- =========================
+     POPULAR RESTAURANTS
+========================= -->
+
+	<section class="restaurants">
+
+		<div class="section-title">
+
+			<h2>Popular Restaurants</h2>
+
+			<p>Discover the best restaurants near you</p>
+
+		</div>
+
+		<div class="restaurant-grid">
+
+			<!-- Card 1 -->
+
+			<div class="restaurant-card">
+
+				<div class="restaurant-image">
+
+					<img src="images/Restaurant/burger.jpg" alt="Burger Hub">
+
+				</div>
+
+				<div class="restaurant-content">
+
+					<div class="restaurant-meta">
+
+						<span class="rating"> ★ 4.8 </span> <span class="time">
+							20-25 min </span>
+
+					</div>
+
+					<h3>Burger Hub</h3>
+
+					<p>Fast Food • Burgers</p>
+
+					<span class="price"> ₹200 for one </span>
+
+				</div>
+
+			</div>
+
+			<!-- Card 2 -->
+
+			<div class="restaurant-card">
+
+				<div class="restaurant-image">
+
+					<img src="images/Restaurant/pizza.jpg" alt="Pizza Palace">
+
+				</div>
+
+				<div class="restaurant-content">
+
+					<div class="restaurant-meta">
+
+						<span class="rating"> ★ 4.9 </span> <span class="time">
+							25-30 min </span>
+
+					</div>
+
+					<h3>Pizza Palace</h3>
+
+					<p>Italian • Pizza</p>
+
+					<span class="price"> ₹250 for one </span>
+
+				</div>
+
+			</div>
+
+			<!-- Card 3 -->
+
+			<div class="restaurant-card">
+
+				<div class="restaurant-image">
+
+					<img src="images/Restaurant/biryani.jpg" alt="Biryani House">
+
+				</div>
+
+				<div class="restaurant-content">
+
+					<div class="restaurant-meta">
+
+						<span class="rating"> ★ 4.7 </span> <span class="time"> 30
+							min </span>
+
+					</div>
+
+					<h3>Biryani House</h3>
+
+					<p>Biryani • Indian</p>
+
+					<span class="price"> ₹220 for one </span>
+
+				</div>
+
+			</div>
+
+			<!-- Card 4 -->
+
+			<div class="restaurant-card">
+
+				<div class="restaurant-image">
+
+					<img src="images/Restaurant/healthy.jpg" alt="Green Bowl">
+
+				</div>
+
+				<div class="restaurant-content">
+
+					<div class="restaurant-meta">
+
+						<span class="rating"> ★ 4.8 </span> <span class="time">
+							15-20 min </span>
+
+					</div>
+
+					<h3>Green Bowl</h3>
+
+					<p>Healthy • Salads</p>
+
+					<span class="price"> ₹180 for one </span>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- =========================
+     TESTIMONIALS
+========================= -->
+
+	<section class="testimonials">
+
+		<div class="section-title">
+
+			<h2>What Our Customers Say</h2>
+
+			<p>Trusted by thousands of food lovers every day</p>
+
+		</div>
+
+		<div class="testimonial-grid">
+
+			<!-- Testimonial 1 -->
+
+			<div class="testimonial-card">
+
+				<div class="testimonial-header">
+
+					<div class="user-avatar">A</div>
+
+					<div>
+
+						<h4>Alex Johnson</h4>
+
+						<span>Food Enthusiast</span>
+
+					</div>
+
+				</div>
+
+				<div class="stars">★★★★★</div>
+
+				<p>The food always arrives hot and fresh. The ordering
+					experience is incredibly smooth.</p>
+
+			</div>
+
+			<!-- Testimonial 2 -->
+
+			<div class="testimonial-card">
+
+				<div class="testimonial-header">
+
+					<div class="user-avatar">S</div>
+
+					<div>
+
+						<h4>Sarah Williams</h4>
+
+						<span>Regular Customer</span>
+
+					</div>
+
+				</div>
+
+				<div class="stars">★★★★★</div>
+
+				<p>Fast delivery, amazing restaurant options, and a beautiful
+					user experience.</p>
+
+			</div>
+
+			<!-- Testimonial 3 -->
+
+			<div class="testimonial-card">
+
+				<div class="testimonial-header">
+
+					<div class="user-avatar">D</div>
+
+					<div>
+
+						<h4>David Lee</h4>
+
+						<span>Verified User</span>
+
+					</div>
+
+				</div>
+
+				<div class="stars">★★★★★</div>
+
+				<p>Easily one of the best food delivery platforms I have used
+					recently.</p>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- =========================
+     BECOME A PARTNER
+========================= -->
+
+	<!-- ==========================================
+         SECTION: BECOME A PARTNER
+         ========================================== -->
+	<section class="partner-section scroll-reveal">
+		<div class="partner-container">
+			<!-- Left Column: Content & Metrics -->
+			<div class="partner-content">
+				<span class="partner-tag">Partner With Us</span>
+				<h2 class="partner-heading">Grow With Platter</h2>
+				<p class="partner-description">Join hundreds of restaurant
+					owners and delivery partners reaching thousands of customers every
+					day.</p>
+
+				<div class="partner-actions">
+					<a href="#" class="partner-btn partner-btn-primary"> <span>Join
+							As Restaurant</span> <i class="fa-solid fa-store"></i>
+					</a> <a href="#" class="partner-btn partner-btn-secondary"> <span>Become
+							Delivery Partner</span> <i class="fa-solid fa-truck-fast"></i>
+					</a>
+				</div>
+
+				<!-- Trust Metrics Grid -->
+				<div class="partner-stats-grid">
+					<div class="stat-card">
+						<div class="stat-icon-wrapper">
+							<i class="fa-solid fa-handshake"></i>
+						</div>
+						<div class="stat-num" data-val="500">0+</div>
+						<div class="stat-label">Restaurant Partners</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon-wrapper">
+							<i class="fa-solid fa-chart-line"></i>
+						</div>
+						<div class="stat-num" data-val="10">0K+</div>
+						<div class="stat-label">Orders Delivered</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon-wrapper">
+							<i class="fa-solid fa-star"></i>
+						</div>
+						<div class="stat-num" data-val="49">0.0★</div>
+						<div class="stat-label">Customer Rating</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon-wrapper">
+							<i class="fa-solid fa-truck-ramp-box"></i>
+						</div>
+						<div class="stat-num" data-val="25">0 Min</div>
+						<div class="stat-label">Average Delivery Time</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Right Column: Interactive Illustration -->
+			<div class="partner-illustration">
+				<div class="illustration-bg-glow"></div>
+				<div class="partner-image-wrapper">
+					<img src="images/hero/rider.png" alt="Platter Partner Rider"
+						class="rider-img">
+				</div>
+
+				<!-- Floating UI Cards -->
+				<div class="partner-float-card float-merchant">
+					<div class="float-icon-circle">
+						<i class="fa-solid fa-utensils"></i>
+					</div>
+					<div class="float-info">
+						<strong>Merchant Portal</strong> <span>Live dashboard
+							tracker</span>
+					</div>
+				</div>
+				<div class="partner-float-card float-earnings">
+					<div class="float-icon-circle">
+						<i class="fa-solid fa-wallet"></i>
+					</div>
+					<div class="float-info">
+						<strong>Daily Earnings</strong> <span>Instant payouts</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ==========================================
+         SECTION: DOWNLOAD THE APP
+         ========================================== -->
+	<section class="download-section scroll-reveal">
+		<div class="download-container">
+			<!-- Left Column: Content & Features -->
+			<div class="download-content">
+				<span class="download-tag">Get The App</span>
+				<h2 class="download-heading">Order Food Anytime, Anywhere</h2>
+				<p class="download-description">Download the Platter app and
+					enjoy a faster and more personalized food ordering experience.</p>
+
+				<!-- Features List -->
+				<div class="download-features-grid">
+					<div class="feature-item">
+						<i class="fa-solid fa-circle-check feature-check"></i> <span>Live
+							Order Tracking</span>
+					</div>
+					<div class="feature-item">
+						<i class="fa-solid fa-circle-check feature-check"></i> <span>Exclusive
+							Discounts</span>
+					</div>
+					<div class="feature-item">
+						<i class="fa-solid fa-circle-check feature-check"></i> <span>Faster
+							Checkout</span>
+					</div>
+					<div class="feature-item">
+						<i class="fa-solid fa-circle-check feature-check"></i> <span>Personalized
+							Recommendations</span>
+					</div>
+				</div>
+
+				<!-- App Store & Google Play Buttons -->
+				<div class="store-buttons-container">
+					<a href="#" class="store-btn google-play-btn"> <i
+						class="fa-brands fa-google-play store-icon"></i>
+						<div class="store-btn-text">
+							<span class="store-subtext">GET IT ON</span> <span
+								class="store-maintext">Google Play</span>
+						</div>
+					</a> <a href="#" class="store-btn app-store-btn"> <i
+						class="fa-brands fa-apple store-icon"></i>
+						<div class="store-btn-text">
+							<span class="store-subtext">Download on the</span> <span
+								class="store-maintext">App Store</span>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<!-- Right Column: Phone Mockup & Floating Badges -->
+			<div class="download-mockup-area">
+				<div class="mockup-glow"></div>
+
+				<!-- Premium CSS-based iPhone Mockup -->
+				<div class="iphone-mockup">
+					<div class="iphone-notch"></div>
+					<div class="iphone-screen">
+						<div class="iphone-app-header">
+							<div class="app-logo">
+								<span>P</span>latter
+							</div>
+							<i class="fa-solid fa-bell app-notification-icon"></i>
+						</div>
+
+						<div class="iphone-app-search">
+							<i class="fa-solid fa-magnifying-glass"></i>
+							<div class="search-placeholder">Search premium dishes...</div>
+						</div>
+
+						<div class="iphone-app-banner">
+							<div class="banner-text">
+								<strong>Get 50% OFF</strong> <span>On your first order</span>
+							</div>
+							<img src="images/hero/burger.png" alt="App Burger"
+								class="app-banner-img">
+						</div>
+
+						<div class="iphone-app-categories">
+							<span class="section-title">Popular Categories</span>
+							<div class="app-categories-row">
+								<div class="app-category-item">
+									<div class="app-category-circle">
+										<img src="images/hero/pizza.png" alt="Pizza">
+									</div>
+									<span>Pizza</span>
+								</div>
+								<div class="app-category-item">
+									<div class="app-category-circle">
+										<img src="images/hero/burger.png" alt="Burger">
+									</div>
+									<span>Burger</span>
+								</div>
+								<div class="app-category-item">
+									<div class="app-category-circle">
+										<img src="images/hero/thali.png" alt="Indian">
+									</div>
+									<span>Indian</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="iphone-app-nav">
+							<i class="fa-solid fa-house active"></i> <i
+								class="fa-solid fa-magnifying-glass"></i> <i
+								class="fa-solid fa-bag-shopping"></i> <i
+								class="fa-solid fa-user"></i>
+						</div>
+					</div>
+					<div class="iphone-home-indicator"></div>
+				</div>
+
+				<!-- Floating UI Cards -->
+				<!-- Rating Card -->
+				<div class="floating-ui-card ui-card-rating">
+					<div class="ui-icon-wrapper rating-color">
+						<span class="emoji-icon">⭐</span>
+					</div>
+					<div class="ui-card-info">
+						<strong>4.9 Rating</strong> <span>Loved by 10k+ foodies</span>
+					</div>
+				</div>
+
+				<!-- Delivery Card -->
+				<div class="floating-ui-card ui-card-delivery">
+					<div class="ui-icon-wrapper delivery-color">
+						<span class="emoji-icon">🚚</span>
+					</div>
+					<div class="ui-card-info">
+						<strong>Live Tracking</strong> <span>Real-time delivery
+							status</span>
+					</div>
+				</div>
+
+				<!-- Discount Card -->
+				<div class="floating-ui-card ui-card-discount">
+					<div class="ui-icon-wrapper discount-color">
+						<span class="emoji-icon">🎁</span>
+					</div>
+					<div class="ui-card-info">
+						<strong>Exclusive Offers</strong> <span>Promo code active</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="footer">
+		<div class="footer-container">
+			<!-- Brand & Socials Row -->
+			<div class="footer-brand-row">
+				<a href="index.html" class="footer-logo"><span>P</span>latter</a>
+			</div>
+
+			<!-- Links Grid -->
+			<div class="footer-links-grid">
+				<!-- Eternal Column -->
+				<div class="footer-column">
+					<h4 class="column-title">Eternal</h4>
+					<ul class="column-links">
+						<li><a href="index.html">Platter</a></li>
+						<li><a href="home.html">Platter Express</a></li>
+						<li><a href="#">District</a></li>
+						<li><a href="#">Hyperpure</a></li>
+						<li><a href="#">Feeding India</a></li>
+						<li><a href="#">Investor Relations</a></li>
+					</ul>
+				</div>
+
+				<!-- For Restaurants Column -->
+				<div class="footer-column">
+					<h4 class="column-title">For Restaurants</h4>
+					<ul class="column-links">
+						<li><a href="#">Partner With Us</a></li>
+						<li><a href="#">Apps For You</a></li>
+						<li><a href="#">Restaurant Consulting</a></li>
+					</ul>
+				</div>
+
+				<!-- For Delivery Partners Column -->
+				<div class="footer-column">
+					<h4 class="column-title">For Delivery Partners</h4>
+					<ul class="column-links">
+						<li><a href="#">Partner With Us</a></li>
+						<li><a href="#">Apps For You</a></li>
+					</ul>
+				</div>
+
+				<!-- Learn More Column -->
+				<div class="footer-column">
+					<h4 class="column-title">Learn More</h4>
+					<ul class="column-links">
+						<li><a href="#">Privacy</a></li>
+						<li><a href="#">Security</a></li>
+						<li><a href="#">Terms of Service</a></li>
+						<li><a href="#">Help & Support</a></li>
+						<li><a href="#">Report a Fraud</a></li>
+						<li><a href="#">Blog</a></li>
+					</ul>
+				</div>
+
+				<!-- Social Links Column -->
+				<div class="footer-column social-column">
+					<h4 class="column-title">Social Links</h4>
+					<div class="social-icons">
+						<a href="#" aria-label="LinkedIn"><i
+							class="fa-brands fa-linkedin-in"></i></a> <a href="#"
+							aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+						<a href="#" aria-label="YouTube"><i
+							class="fa-brands fa-youtube"></i></a> <a href="#"
+							aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+						<a href="#" aria-label="Twitter"><i
+							class="fa-brands fa-x-twitter"></i></a>
+					</div>
+					<div class="footer-store-buttons">
+						<a href="#" class="footer-store-btn"> <i
+							class="fa-brands fa-apple"></i>
+							<div class="btn-text">
+								<span class="sub">Download on the</span> <span class="main">App
+									Store</span>
+							</div>
+						</a> <a href="#" class="footer-store-btn"> <i
+							class="fa-brands fa-google-play"></i>
+							<div class="btn-text">
+								<span class="sub">GET IT ON</span> <span class="main">Google
+									Play</span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<hr class="footer-divider">
+
+			<!-- Bottom Row -->
+			<p class="footer-bottom-text">By continuing past this page, you
+				agree to our Terms of Service, Cookie Policy, Privacy Policy and
+				Content Policies. All trademarks are properties of their respective
+				owners. 2008-2026 © Platter™ Ltd. All rights reserved.</p>
+		</div>
+	</footer>
+
+
+
+	<!-- =====================================================
+         LOGIN MODAL OVERLAY
+         ===================================================== -->
+	<div class="auth-modal-overlay" id="login-modal" role="dialog"
+		aria-modal="true" aria-label="Login">
+		<div class="auth-modal-card">
+
+			<!-- Close Button -->
+			<button class="modal-close-btn" aria-label="Close login modal">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+
+			<!-- Logo -->
+			<div class="modal-logo-container">
+				<div class="modal-logo-icon">
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+                        <path
+							d="M12 4C11.45 4 11 4.45 11 5C11 5.3 11.13 5.57 11.34 5.76C7.22 6.27 4 9.76 4 14H20C20 9.76 16.78 6.27 12.66 5.76C12.87 5.57 13 5.3 13 5C13 4.45 12.55 4 12 4Z"
+							fill="#F4B400" />
+                        <path
+							d="M3 16C3 15.45 3.45 15 4 15H20C20.55 15 21 15.45 21 16C21 16.55 20.55 17 20 17H4C3.45 17 3 16.55 3 16Z"
+							fill="#F4B400" />
+                    </svg>
+				</div>
+				<span class="modal-logo-text">Platter</span> <span
+					class="modal-logo-tagline">Good Food, Great Mood</span>
+			</div>
+
+			<!-- Header -->
+			<header class="modal-auth-header">
+				<h2>Welcome Back 👋</h2>
+				<p class="modal-subtitle">Login to continue to Platter</p>
+			</header>
+
+			<!-- Form -->
+			<form id="modal-login-form" class="modal-auth-form" novalidate>
+
+				<!-- Alert -->
+				<div id="modal-login-alert" class="modal-alert-box modal-hidden"></div>
+
+				<!-- Email -->
+				<div class="modal-input-group">
+					<label for="modal-login-email">Email Address</label>
+					<div class="modal-input-wrapper">
+						<input type="email" id="modal-login-email" name="email"
+							placeholder="Enter your email" required> <i
+							class="fa-regular fa-envelope modal-input-icon"></i>
+					</div>
+				</div>
+
+				<!-- Password -->
+				<div class="modal-input-group">
+					<label for="modal-login-password">Password</label>
+					<div class="modal-input-wrapper">
+						<input type="password" id="modal-login-password" name="password"
+							placeholder="Enter your password" required> <i
+							class="fa-solid fa-lock modal-input-icon"></i>
+						<button type="button" id="modal-login-toggle-pwd"
+							class="modal-password-toggle" aria-label="Toggle password">
+							<i class="fa-regular fa-eye"></i>
+						</button>
+					</div>
+				</div>
+
+				<!-- Actions -->
+				<div class="modal-auth-actions">
+					<label class="modal-checkbox-container"> <input
+						type="checkbox" id="modal-remember-me" name="remember"> <span
+						class="modal-checkmark"></span> Remember Me
+					</label> <a href="#" class="modal-forgot-link">Forgot Password?</a>
+				</div>
+
+				<!-- Submit -->
+				<button type="submit" class="modal-submit-btn">
+					<span>Login</span> <i
+						class="fa-solid fa-arrow-right modal-btn-arrow"></i>
+				</button>
+
+				<!-- Divider -->
+				<div class="modal-divider">
+					<span>or continue with</span>
+				</div>
+
+				<!-- Google -->
+				<button type="button" class="modal-google-btn">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+						alt="Google logo"> <span>Continue with Google</span>
+				</button>
+
+			</form>
+
+			<!-- Switch to Signup -->
+			<footer class="modal-auth-footer">
+				<p>
+					Don't have an account?
+					<button class="modal-switch-link" id="switch-to-signup">Sign
+						Up</button>
+				</p>
+			</footer>
+
+		</div>
+	</div>
+
+	<!-- =====================================================
+         SIGNUP MODAL OVERLAY (Simple style)
+         ===================================================== -->
+	<div class="auth-modal-overlay" id="signup-modal" role="dialog"
+		aria-modal="true" aria-label="Sign Up">
+		<div class="auth-modal-card signup-simple-card">
+
+			<!-- Close Button -->
+			<button class="modal-close-btn signup-close-btn"
+				aria-label="Close signup modal">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+
+			<!-- Title -->
+			<h2 class="signup-simple-title">Sign up</h2>
+
+			<!-- Form -->
+			<form id="modal-signup-form" action="signup" method="post">
+
+				<!-- Alert -->
+				<div id="modal-signup-alert" class="modal-alert-box modal-hidden"></div>
+
+				<!-- Full Name -->
+				<input type="text" id="modal-signup-name" name="name"
+					class="signup-simple-input" placeholder="Full Name" required>
+
+				<!-- Email -->
+				<input type="email" id="modal-signup-email" name="email"
+					class="signup-simple-input" placeholder="Email" required>
+
+				<!-- Agreement -->
+				<label class="signup-terms-label"> <input type="checkbox"
+					id="modal-agree-terms" name="agree" required> <span
+					class="signup-terms-box"></span> <span class="signup-terms-text">
+						I agree to Platter's <a href="#" class="signup-terms-link">Terms
+							of Service</a>, <a href="#" class="signup-terms-link">Privacy
+							Policy</a> and <a href="#" class="signup-terms-link">Content
+							Policies</a>
+				</span>
+				</label>
+
+				<!-- Create Account Button -->
+				<button type="submit" class="signup-create-btn"
+					id="signup-create-btn" disabled>Create account</button>
+
+				<!-- Divider -->
+				<div class="signup-divider">
+					<span>or</span>
+				</div>
+
+				<!-- Google -->
+				<button type="button" class="signup-google-btn">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+						alt="Google"> Sign in with Google
+				</button>
+
+			</form>
+
+			<!-- Switch to Login -->
+			<div class="signup-simple-footer">
+				<hr class="signup-footer-line">
+				<p>
+					Already have an account?
+					<button class="signup-login-link" id="switch-to-login">Log
+						in</button>
+				</p>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<script src="js/script.js"></script>
+	<script src="js/modal.js"></script>
+
+</body>
+
+</html>
