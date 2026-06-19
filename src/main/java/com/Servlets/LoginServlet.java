@@ -49,13 +49,24 @@ public class LoginServlet extends HttpServlet {
 
 			session.setAttribute("loggedInUser", user);
 
-			resp.sendRedirect("home");
+			String redirectTo = req.getParameter("redirectTo");
+			System.out.println("LoginServlet: Received redirectTo = [" + redirectTo + "]");
+			if (redirectTo != null && !redirectTo.trim().isEmpty()) {
+				resp.sendRedirect(redirectTo);
+			} else {
+				resp.sendRedirect("home");
+			}
 
 		}
 
 		else {
 
-			resp.sendRedirect("index.jsp?error=invalid");
+			String redirectTo = req.getParameter("redirectTo");
+			if (redirectTo != null && !redirectTo.trim().isEmpty()) {
+				resp.sendRedirect("index.jsp?error=invalid&showLogin=true&redirectTo=" + redirectTo);
+			} else {
+				resp.sendRedirect("index.jsp?error=invalid");
+			}
 
 		}
 

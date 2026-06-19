@@ -28,7 +28,7 @@ public class HomeServlet extends HttpServlet {
 
 				session.getAttribute("loggedInUser") == null) {
 
-			resp.sendRedirect("index.jsp?showLogin=true");
+			resp.sendRedirect("index.jsp?showLogin=true&redirectTo=home");
 
 			return;
 

@@ -417,6 +417,14 @@
 
         );
 
+        const redirectTo = params.get("redirectTo");
+        if (redirectTo) {
+            const redirectInput = document.getElementById("loginRedirectTo");
+            if (redirectInput) {
+                redirectInput.value = redirectTo;
+            }
+        }
+
         window.history.replaceState(
 
             {},
@@ -430,9 +438,17 @@
     }
 
     // Home clicked without login
-    if (params.get("showLogin") === "true") {
+    else if (params.get("showLogin") === "true") {
 
         openModal(loginOverlay);
+
+        const redirectTo = params.get("redirectTo");
+        if (redirectTo) {
+            const redirectInput = document.getElementById("loginRedirectTo");
+            if (redirectInput) {
+                redirectInput.value = redirectTo;
+            }
+        }
 
         window.history.replaceState(
 
