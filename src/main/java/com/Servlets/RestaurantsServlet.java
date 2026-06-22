@@ -36,7 +36,7 @@ public class RestaurantsServlet extends HttpServlet {
         String query  = req.getParameter("q");
         String filter = req.getParameter("filter");   // topRated | freeDelivery | openNow | fastDelivery | all
         if (filter == null) {
-            filter = "fastDelivery";
+            filter = "all";
         }
 
         // Apply text search

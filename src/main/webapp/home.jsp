@@ -21,7 +21,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/home.css?v=1.0.5">
 </head>
 
 <body>
@@ -134,7 +134,7 @@
 							Platter Wallet</a> <a href="#" class="profile-item"><i
 							class="fa-solid fa-gear"></i> Settings</a>
 						<div class="dropdown-divider"></div>
-						<a href="#" class="profile-item logout-link"><i
+						<a href="logout" class="profile-item logout-link"><i
 							class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
 					</div>
 				</div>
@@ -210,7 +210,7 @@
 			</nav>
 		</div>
 		<div class="drawer-footer">
-			<button class="drawer-logout-btn">
+			<button class="drawer-logout-btn" onclick="window.location.href='logout'">
 				<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
 			</button>
 		</div>
@@ -358,7 +358,7 @@
 
 			<div class="categories-track" id="categoriesTrack">
 				<!-- Pizza -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Pizza'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/pizza.png" alt="Pizza"
 							class="category-circle-img">
@@ -368,7 +368,7 @@
 				</div>
 
 				<!-- Burger -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Burger'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/burger.png" alt="Burger"
 							class="category-circle-img">
@@ -378,7 +378,7 @@
 				</div>
 
 				<!-- Chinese -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Chinese'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/chinese.png" alt="Chinese"
 							class="category-circle-img">
@@ -388,7 +388,7 @@
 				</div>
 
 				<!-- Biryani -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Biryani'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/biryani.png" alt="Biryani"
 							class="category-circle-img">
@@ -398,7 +398,7 @@
 				</div>
 
 				<!-- Coffee -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Coffee'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/coffee.png" alt="Coffee"
 							class="category-circle-img">
@@ -408,7 +408,7 @@
 				</div>
 
 				<!-- Desserts -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Desserts'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/dessert.png" alt="Desserts"
 							class="category-circle-img">
@@ -418,7 +418,7 @@
 				</div>
 
 				<!-- Healthy -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Healthy'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/healthy.png" alt="Healthy"
 							class="category-circle-img">
@@ -428,7 +428,7 @@
 				</div>
 
 				<!-- Indian -->
-				<div class="category-card-item">
+				<div class="category-card-item" onclick="window.location.href='category?name=Indian'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/indian.png" alt="Indian"
 							class="category-circle-img">
@@ -455,50 +455,73 @@
 				<%
 				List<Restaurant> restaurantList = (List<Restaurant>) request.getAttribute("restaurantList");
 				if (restaurantList != null && !restaurantList.isEmpty()) {
+					int cardDelay = 0;
 					for (Restaurant r : restaurantList) {
+						cardDelay += 60;
+						String openStatusClass = r.isOpen() ? "status-open" : "status-closed";
+						String openStatusText  = r.isOpen() ? "Open Now"    : "Closed";
 				%>
-				<div class="restaurant-card-item">
-					<div class="card-image-container">
-						<img src="<%= r.getImagePath() %>" alt="<%= r.getName() %>"
-							class="restaurant-cover-img"> 
+				<div class="rest-card"
+					style="animation-delay: <%= cardDelay %>ms;"
+					data-name="<%= r.getName().toLowerCase() %>"
+					data-cuisine="<%= r.getCuisine().toLowerCase() %>"
+					data-rating="<%= r.getRating() %>"
+					data-distance="<%= r.getDistance() %>"
+					data-price="<%= r.getCostForOne() %>">
+
+					<!-- Card Image -->
+					<div class="rest-card-img-wrap">
+						<img src="<%= r.getImagePath() %>" alt="<%= r.getName() %>" loading="lazy">
+
 						<% if (r.isTopRated()) { %>
-							<span class="restaurant-badge badge-top-rated">Top Rated</span> 
+							<span class="rest-badge-top badge-top-rated">
+								<i class="fa-solid fa-star"></i> Top Rated
+							</span>
 						<% } else { %>
-							<span class="restaurant-badge badge-popular">Popular</span> 
+							<span class="rest-badge-top badge-popular">
+								<i class="fa-solid fa-fire"></i> Popular
+							</span>
 						<% } %>
-						<span class="restaurant-open-status"><%= r.isOpen() ? "Open Now" : "Closed" %></span>
-						<button class="card-favorite-btn" aria-label="Add to Favorites"
-							title="Favorite">
+
+						<span class="rest-open-status <%= openStatusClass %>"><%= openStatusText %></span>
+
+						<button class="rest-fav-btn" aria-label="Add to favourites" title="Favourite">
 							<i class="fa-regular fa-heart"></i>
 						</button>
 					</div>
-					<div class="card-details-container">
-						<div class="card-first-row">
-							<h3 class="restaurant-name-title"><%= r.getName() %></h3>
-							<div class="rating-chip-badge">
-								<i class="fa-solid fa-star"></i> <span><%= r.getRating() %></span>
+
+					<!-- Card Body -->
+					<div class="rest-card-body">
+
+						<div class="rest-card-row1">
+							<h3 class="rest-card-name"><%= r.getName() %></h3>
+							<div class="rest-rating-chip">
+								<i class="fa-solid fa-star"></i>
+								<span><%= r.getRating() %></span>
 							</div>
 						</div>
-						<p class="cuisine-type-desc"><%= r.getCuisine() %></p>
-						<div class="card-meta-details">
-							<div class="meta-item">
-								<i class="fa-solid fa-circle-notch timer-icon"></i> <%= r.getDeliveryTime() %>
-							</div>
-							<div class="meta-item">
-								<i class="fa-solid fa-location-dot"></i> <%= r.getDistance() %> km
-							</div>
+
+						<p class="rest-cuisine"><%= r.getCuisine() %></p>
+
+						<div class="rest-meta-row-premium">
+							<span><%= r.getDeliveryTime() %> mins</span>
+							<span class="meta-dot">&bull;</span>
+							<span>&#8377;<%= r.getCostForOne() %> for two</span>
 						</div>
-						<div class="card-pricing-row">
-							<span class="pricing-per-person">₹<%= r.getCostForOne() %> for one</span> 
+
+						<div class="rest-delivery-row">
 							<% if (r.isFreeDelivery()) { %>
-								<span class="delivery-fee-badge free">Free Delivery</span>
+								<span class="delivery-status free"><span class="status-dot">🟢</span> Free Delivery</span>
 							<% } else { %>
-								<span class="delivery-fee-badge paid">₹40 Delivery</span>
+								<span class="delivery-status paid"><span class="status-dot">🟠</span> &#8377;40 Delivery</span>
 							<% } %>
 						</div>
-						<button class="view-menu-action-btn">
-							<span>View Menu</span> <i class="fa-solid fa-utensils"></i>
+
+						<button class="rest-view-btn">
+							<i class="fa-solid fa-utensils"></i>
+							<span>View Menu</span>
 						</button>
+
 					</div>
 				</div>
 				<%

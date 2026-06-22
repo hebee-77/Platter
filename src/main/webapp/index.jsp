@@ -167,35 +167,35 @@
 
 			<div class="category-slider">
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Pizza'">
 					<img src="images/categories/pizza.png" alt=""> <span>Pizza</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Burger'">
 					<img src="images/categories/burger.png" alt=""> <span>Burger</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Indian'">
 					<img src="images/categories/indian.png" alt=""> <span>Indian</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Chinese'">
 					<img src="images/categories/chinese.png" alt=""> <span>Chinese</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Healthy'">
 					<img src="images/categories/healthy.png" alt=""> <span>Healthy</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Desserts'">
 					<img src="images/categories/dessert.png" alt=""> <span>Desserts</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Coffee'">
 					<img src="images/categories/coffee.png" alt=""> <span>Coffee</span>
 				</div>
 
-				<div class="category-item">
+				<div class="category-item" onclick="window.location.href='category?name=Biryani'">
 					<img src="images/categories/biryani.png" alt=""> <span>Biryani</span>
 				</div>
 

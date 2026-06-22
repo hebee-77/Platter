@@ -29,10 +29,12 @@
     String searchQuery  = (String)  request.getAttribute("searchQuery");
     String activeFilter = (String)  request.getAttribute("activeFilter");
     Integer totalCount  = (Integer) request.getAttribute("totalCount");
+    String categoryName = (String)  request.getAttribute("categoryName");
 
     if (searchQuery  == null) searchQuery  = "";
     if (activeFilter == null) activeFilter = "";
     if (totalCount   == null) totalCount   = 0;
+    if (categoryName == null) categoryName = "";
 
     /* Pre-compute safe chip class strings (avoids double-quote conflicts in JSP attributes) */
     String qParam       = searchQuery.isEmpty() ? "" : "?q=" + searchQuery;
@@ -45,7 +47,9 @@
 
     /* Pre-compute section label */
     String sectionLabel;
-    if (!searchQuery.isEmpty()) {
+    if (!categoryName.isEmpty()) {
+        sectionLabel = categoryName + " Restaurants";
+    } else if (!searchQuery.isEmpty()) {
         sectionLabel = "Results for &ldquo;" + searchQuery + "&rdquo;";
     } else if ("topRated".equals(activeFilter)) {
         sectionLabel = "&#11088; Top Rated Restaurants";
@@ -158,7 +162,12 @@
 
     <div class="restaurants-hero-content">
         <h1 class="restaurants-page-title">
-            All <span>Restaurants</span> <span class="title-count-badge"><%= totalCount %></span>
+            <% if (!categoryName.isEmpty()) { %>
+                <%= categoryName %> <span>Restaurants</span>
+            <% } else { %>
+                All <span>Restaurants</span>
+            <% } %>
+            <span class="title-count-badge"><%= totalCount %></span>
         </h1>
         <p class="restaurants-page-subtitle">
             <i class="fa-solid fa-location-dot"></i>

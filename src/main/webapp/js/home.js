@@ -601,7 +601,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Prep stagger containers and elements before observing
     scrollRevealElements.forEach(el => {
-        const cards = el.querySelectorAll('.stat-card, .category-item, .restaurant-card, .dish-card, .step-card, .testimonial-card, .category-card-item, .restaurant-card-item, .dish-card-item, .feature-item, .partner-float-card, .floating-ui-card');
+        const cards = el.querySelectorAll('.stat-card, .category-item, .restaurant-card, .dish-card, .step-card, .testimonial-card, .category-card-item, .restaurant-card-item, .rest-card, .dish-card-item, .feature-item, .partner-float-card, .floating-ui-card');
         if (cards.length > 0) {
             el.classList.add("stagger-parent");
             cards.forEach(card => {
@@ -617,7 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("revealed");
                 if (entry.target.classList.contains("stagger-parent")) {
-                    const cards = entry.target.querySelectorAll('.stat-card, .category-item, .restaurant-card, .dish-card, .step-card, .testimonial-card, .category-card-item, .restaurant-card-item, .dish-card-item, .feature-item, .partner-float-card, .floating-ui-card');
+                    const cards = entry.target.querySelectorAll('.stat-card, .category-item, .restaurant-card, .dish-card, .step-card, .testimonial-card, .category-card-item, .restaurant-card-item, .rest-card, .dish-card-item, .feature-item, .partner-float-card, .floating-ui-card');
                     cards.forEach((card, index) => {
                         setTimeout(() => {
                             card.style.opacity = "1";
@@ -639,8 +639,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------------------------
     // 12. FAVORITES TOGGLING & VIEW MENU MICRO-INTERACTIONS (PHASE 3)
     // ----------------------------------------------------------------------
-    const favoriteBtns = document.querySelectorAll(".card-favorite-btn");
-    const viewMenuBtns = document.querySelectorAll(".view-menu-action-btn");
+    const favoriteBtns = document.querySelectorAll(".card-favorite-btn, .rest-fav-btn");
+    const viewMenuBtns = document.querySelectorAll(".view-menu-action-btn, .rest-view-btn");
 
     favoriteBtns.forEach(btn => {
         btn.addEventListener("click", (e) => {
@@ -667,7 +667,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", (e) => {
             e.preventDefault();
             const originalContent = btn.innerHTML;
-            const restaurantName = btn.closest(".restaurant-card-item").querySelector(".restaurant-name-title").textContent;
+            const cardParent = btn.closest(".restaurant-card-item") || btn.closest(".rest-card");
+            const restaurantName = cardParent.querySelector(".restaurant-name-title, .rest-card-name").textContent;
 
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Opening Menu...`;
             btn.style.pointerEvents = "none";
