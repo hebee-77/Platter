@@ -296,7 +296,7 @@
                     <% } %>
                 </div>
 
-                <button class="rest-view-btn">
+                <button class="rest-view-btn" onclick="window.location.href='menu?id=<%= r.getRestaurantId() %>'">
                     <i class="fa-solid fa-utensils"></i>
                     <span>View Menu</span>
                 </button>
