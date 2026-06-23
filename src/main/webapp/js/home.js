@@ -647,19 +647,51 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             e.stopPropagation();
 
-            btn.classList.toggle("active");
-            const icon = btn.querySelector("i");
+            const restId = btn.getAttribute("data-restaurant-id");
+            if (!restId) return;
 
-            if (btn.classList.contains("active")) {
-                icon.className = "fa-solid fa-heart";
-                // Bounce effect on activation
-                btn.style.transform = "scale(1.2)";
-                setTimeout(() => { btn.style.transform = ""; }, 200);
-            } else {
-                icon.className = "fa-regular fa-heart";
-                btn.style.transform = "scale(0.9)";
-                setTimeout(() => { btn.style.transform = ""; }, 200);
-            }
+            fetch("favorites", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "type=restaurant&id=" + restId
+            })
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error("Network response was not ok.");
+            })
+            .then(data => {
+                if (data.status === "success") {
+                    btn.classList.toggle("is-fav", data.added);
+                    btn.classList.toggle("active", data.added);
+                    const icon = btn.querySelector("i");
+
+                    if (data.added) {
+                        icon.className = "fa-solid fa-heart";
+                        // Bounce effect on activation
+                        btn.style.transform = "scale(1.2)";
+                        setTimeout(() => { btn.style.transform = ""; }, 200);
+                        btn.title = "Remove from favourites";
+                    } else {
+                        icon.className = "fa-regular fa-heart";
+                        btn.style.transform = "scale(0.9)";
+                        setTimeout(() => { btn.style.transform = ""; }, 200);
+                        btn.title = "Add to favourites";
+                    }
+
+                    // Update header and mobile drawer badges
+                    document.querySelectorAll(".fav-badge-count").forEach(badge => {
+                        badge.textContent = data.favoriteCount;
+                        if (data.favoriteCount > 0) {
+                            badge.style.display = "";
+                        } else {
+                            badge.style.display = "none";
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                console.error("Error toggling favorite:", err);
+            });
         });
     });
 
@@ -741,17 +773,50 @@ document.addEventListener("DOMContentLoaded", () => {
     wishlistBtns.forEach(btn => {
         btn.addEventListener("click", (e) => {
             e.preventDefault();
-            btn.classList.toggle("active");
-            const icon = btn.querySelector("i");
-            if (btn.classList.contains("active")) {
-                icon.className = "fa-solid fa-heart";
-                btn.style.transform = "scale(1.2)";
-                setTimeout(() => { btn.style.transform = ""; }, 200);
-            } else {
-                icon.className = "fa-regular fa-heart";
-                btn.style.transform = "scale(0.9)";
-                setTimeout(() => { btn.style.transform = ""; }, 200);
-            }
+            e.stopPropagation();
+
+            const dishId = btn.getAttribute("data-dish-id");
+            if (!dishId) return;
+
+            fetch("favorites", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "type=dish&id=" + dishId
+            })
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error("Network response was not ok.");
+            })
+            .then(data => {
+                if (data.status === "success") {
+                    btn.classList.toggle("active", data.added);
+                    const icon = btn.querySelector("i");
+                    if (data.added) {
+                        icon.className = "fa-solid fa-heart";
+                        btn.style.transform = "scale(1.2)";
+                        setTimeout(() => { btn.style.transform = ""; }, 200);
+                        btn.title = "Remove from wishlist";
+                    } else {
+                        icon.className = "fa-regular fa-heart";
+                        btn.style.transform = "scale(0.9)";
+                        setTimeout(() => { btn.style.transform = ""; }, 200);
+                        btn.title = "Add to Wishlist";
+                    }
+
+                    // Update header and mobile drawer badges
+                    document.querySelectorAll(".fav-badge-count").forEach(badge => {
+                        badge.textContent = data.favoriteCount;
+                        if (data.favoriteCount > 0) {
+                            badge.style.display = "";
+                        } else {
+                            badge.style.display = "none";
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                console.error("Error toggling favorite:", err);
+            });
         });
     });
 

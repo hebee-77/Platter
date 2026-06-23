@@ -25,6 +25,15 @@
 </head>
 
 <body>
+<%
+	User loggedInUser = (User) session.getAttribute("loggedInUser");
+	int favCount = 0;
+	int cartCount = 0;
+	if (loggedInUser != null) {
+		favCount = new com.DAOImpl.FavoriteDAOImpl().getFavoritesCount(loggedInUser.getUserId());
+		cartCount = new com.DAOImpl.CartDAOImpl().getCartItemCount(loggedInUser.getUserId());
+	}
+%>
 
 	<!-- Background Decorative Blobs -->
 	<div class="blur blob-1"></div>
@@ -102,20 +111,20 @@
 				</button>
 
 				<!-- Favorites Icon Button -->
-				<a href="#" class="nav-btn-icon" aria-label="Favorites"
-					title="Favorites"> <i class="fa-regular fa-heart"></i> <span
-					class="badge badge-primary">3</span>
+				<a href="favorites" class="nav-btn-icon" aria-label="Favorites"
+					title="Favorites"> <i class="fa-regular fa-heart"></i>
+					<span class="badge badge-primary fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
 				</a>
 
 				<!-- Cart Icon Button -->
 				<a href="#" class="nav-btn-icon" aria-label="Cart"
 					title="Shopping Cart"> <i class="fa-solid fa-bag-shopping"></i>
-					<span class="badge badge-secondary">2</span>
+					<span class="badge badge-secondary cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
 				</a>
 
 				<!-- Profile Button -->
 				<%
-				User loggedInUser = (User) session.getAttribute("loggedInUser");
+				// loggedInUser is already declared at the top of the body
 				%>
 				<div class="profile-container" id="profileTrigger">
 					<button class="profile-avatar-btn" aria-label="User profile">
@@ -196,11 +205,14 @@
 
 			<!-- Mobile Links -->
 			<nav class="drawer-nav">
+				<a href="favorites" class="drawer-nav-item"><i
+					class="fa-regular fa-heart"></i> Favorites
+					<span class="nav-badge fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
+				</a>
 				<a href="#" class="drawer-nav-item"><i
-					class="fa-regular fa-heart"></i> Favorites <span class="nav-badge">3</span></a>
-				<a href="#" class="drawer-nav-item"><i
-					class="fa-solid fa-bag-shopping"></i> My Cart <span
-					class="nav-badge sec">2</span></a> <a href="#" class="drawer-nav-item"><i
+					class="fa-solid fa-bag-shopping"></i> My Cart
+					<span class="nav-badge sec cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
+				</a> <a href="#" class="drawer-nav-item"><i
 					class="fa-regular fa-user"></i> My Profile</a> <a href="#"
 					class="drawer-nav-item"><i class="fa-solid fa-ticket"></i>
 					Offers & Coupons</a> <a href="#" class="drawer-nav-item"><i
@@ -485,8 +497,17 @@
 
 						<span class="rest-open-status <%= openStatusClass %>"><%= openStatusText %></span>
 
-						<button class="rest-fav-btn" aria-label="Add to favourites" title="Favourite">
-							<i class="fa-regular fa-heart"></i>
+						<%
+							boolean isFavRest = false;
+							if (loggedInUser != null) {
+								isFavRest = new com.DAOImpl.FavoriteDAOImpl().isRestaurantFavorite(loggedInUser.getUserId(), r.getRestaurantId());
+							}
+							String favRestClass = isFavRest ? "rest-fav-btn is-fav" : "rest-fav-btn";
+							String favRestIcon = isFavRest ? "fa-solid fa-heart" : "fa-regular fa-heart";
+							String favRestTitle = isFavRest ? "Remove from favourites" : "Add to favourites";
+						%>
+						<button class="<%= favRestClass %>" data-restaurant-id="<%= r.getRestaurantId() %>" aria-label="<%= favRestTitle %>" title="<%= favRestTitle %>">
+							<i class="<%= favRestIcon %>"></i>
 						</button>
 					</div>
 
@@ -565,9 +586,17 @@
 						<div class="dish-indicator <%= d.isVeg() ? "veg" : "non-veg" %>" title="<%= d.isVeg() ? "Vegetarian" : "Non-Vegetarian" %>">
 							<span class="dot"></span>
 						</div>
-						<button class="dish-wishlist-btn" aria-label="Add to Wishlist"
-							title="Wishlist">
-							<i class="fa-regular fa-heart"></i>
+						<%
+							boolean isFavDish = false;
+							if (loggedInUser != null) {
+								isFavDish = new com.DAOImpl.FavoriteDAOImpl().isDishFavorite(loggedInUser.getUserId(), d.getDishId());
+							}
+							String favDishClass = isFavDish ? "dish-wishlist-btn active" : "dish-wishlist-btn";
+							String favDishIcon = isFavDish ? "fa-solid fa-heart" : "fa-regular fa-heart";
+							String favDishTitle = isFavDish ? "Remove from wishlist" : "Add to Wishlist";
+						%>
+						<button class="<%= favDishClass %>" data-dish-id="<%= d.getDishId() %>" aria-label="<%= favDishTitle %>" title="<%= favDishTitle %>">
+							<i class="<%= favDishIcon %>"></i>
 						</button>
 					</div>
 					<div class="dish-details-container">

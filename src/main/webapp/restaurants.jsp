@@ -25,6 +25,12 @@
 
 <%
     User loggedInUser = (User) session.getAttribute("loggedInUser");
+    int favCount = 0;
+    int cartCount = 0;
+    if (loggedInUser != null) {
+        favCount = new com.DAOImpl.FavoriteDAOImpl().getFavoritesCount(loggedInUser.getUserId());
+        cartCount = new com.DAOImpl.CartDAOImpl().getCartItemCount(loggedInUser.getUserId());
+    }
 
     String searchQuery  = (String)  request.getAttribute("searchQuery");
     String activeFilter = (String)  request.getAttribute("activeFilter");
@@ -88,12 +94,14 @@
 
         <div class="nav-actions">
 
-            <a href="#" class="nav-btn-icon" aria-label="Favorites" title="Favorites">
+            <a href="favorites" class="nav-btn-icon" aria-label="Favorites" title="Favorites">
                 <i class="fa-regular fa-heart"></i>
+                <span class="badge badge-primary fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
             </a>
 
             <a href="#" class="nav-btn-icon" aria-label="Cart" title="Cart">
                 <i class="fa-solid fa-bag-shopping"></i>
+                <span class="badge badge-secondary cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
             </a>
 
             <div class="profile-container" id="profileTrigger">
@@ -139,8 +147,12 @@
         <nav class="drawer-nav">
             <a href="home"        class="drawer-nav-item"><i class="fa-solid fa-house"></i> Home</a>
             <a href="restaurants" class="drawer-nav-item active"><i class="fa-solid fa-utensils"></i> Restaurants</a>
-            <a href="#"           class="drawer-nav-item"><i class="fa-regular fa-heart"></i> Favorites</a>
-            <a href="#"           class="drawer-nav-item"><i class="fa-solid fa-bag-shopping"></i> My Cart</a>
+            <a href="favorites"           class="drawer-nav-item"><i class="fa-regular fa-heart"></i> Favorites
+                <span class="nav-badge fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
+            </a>
+            <a href="#"           class="drawer-nav-item"><i class="fa-solid fa-bag-shopping"></i> My Cart
+                <span class="nav-badge sec cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
+            </a>
             <a href="#"           class="drawer-nav-item"><i class="fa-regular fa-user"></i> My Profile</a>
             <a href="#"           class="drawer-nav-item"><i class="fa-solid fa-ticket"></i> Offers &amp; Coupons</a>
             <a href="#"           class="drawer-nav-item"><i class="fa-solid fa-headset"></i> Help &amp; Support</a>
@@ -264,8 +276,17 @@
 
                 <span class="rest-open-status <%= openStatusClass %>"><%= openStatusText %></span>
 
-                <button class="rest-fav-btn" aria-label="Add to favourites" title="Favourite">
-                    <i class="fa-regular fa-heart"></i>
+                <%
+                    boolean isFavRest = false;
+                    if (loggedInUser != null) {
+                        isFavRest = new com.DAOImpl.FavoriteDAOImpl().isRestaurantFavorite(loggedInUser.getUserId(), r.getRestaurantId());
+                    }
+                    String favRestClass = isFavRest ? "rest-fav-btn is-fav" : "rest-fav-btn";
+                    String favRestIcon = isFavRest ? "fa-solid fa-heart" : "fa-regular fa-heart";
+                    String favRestTitle = isFavRest ? "Remove from favourites" : "Add to favourites";
+                %>
+                <button class="<%= favRestClass %>" data-restaurant-id="<%= r.getRestaurantId() %>" aria-label="<%= favRestTitle %>" title="<%= favRestTitle %>">
+                    <i class="<%= favRestIcon %>"></i>
                 </button>
             </div>
 
@@ -463,15 +484,44 @@
     document.querySelectorAll('.rest-fav-btn').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
             e.stopPropagation();
-            btn.classList.toggle('is-fav');
-            var icon = btn.querySelector('i');
-            if (btn.classList.contains('is-fav')) {
-                icon.classList.replace('fa-regular', 'fa-solid');
-                btn.title = 'Remove from favourites';
-            } else {
-                icon.classList.replace('fa-solid', 'fa-regular');
-                btn.title = 'Add to favourites';
-            }
+            var restId = btn.getAttribute('data-restaurant-id');
+            if (!restId) return;
+
+            fetch('favorites', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'type=restaurant&id=' + restId
+            })
+            .then(function (res) {
+                if (res.ok) return res.json();
+                throw new Error('Network response was not ok.');
+            })
+            .then(function (data) {
+                if (data.status === 'success') {
+                    btn.classList.toggle('is-fav', data.added);
+                    var icon = btn.querySelector('i');
+                    if (data.added) {
+                        icon.className = 'fa-solid fa-heart';
+                        btn.title = 'Remove from favourites';
+                    } else {
+                        icon.className = 'fa-regular fa-heart';
+                        btn.title = 'Add to favourites';
+                    }
+                    
+                    // Update header and mobile drawer badges
+                    document.querySelectorAll('.fav-badge-count').forEach(function (badge) {
+                        badge.textContent = data.favoriteCount;
+                        if (data.favoriteCount > 0) {
+                            badge.style.display = '';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    });
+                }
+            })
+            .catch(function (err) {
+                console.error('Error toggling favorite:', err);
+            });
         });
     });
 
