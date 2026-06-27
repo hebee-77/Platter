@@ -119,11 +119,16 @@ public class CartServlet extends HttpServlet {
 			case "decrement":
 				cartDao.decrement(userId, dishId);
 				break;
+			case "remove":
+			case "delete":
+				cartDao.removeItem(userId, dishId);
+				break;
 			default:
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("{\"error\":\"Unknown action\"}");
 				return;
 		}
+
 
 		// Fetch fresh counts from DB — do not compute in Java
 		int count = cartDao.getCartItemCount(userId);

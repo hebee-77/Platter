@@ -11,3 +11,42 @@ Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse
 
 !ENTRY ch.qos.logback.classic 1 0 2026-06-18 09:05:47.409
 !MESSAGE Logback config file: /Users/hebee/JavaProject/Platter/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
+!SESSION 2026-06-23 21:41:19.189 -----------------------------------------------
+eclipse.buildId=4.38.0.20251204-0849
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring -data /Users/hebee/JavaProject/Platter
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-23 21:41:20.234
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-23 21:41:20.939
+!MESSAGE Logback config file: /Users/hebee/JavaProject/Platter/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
+!SESSION 2026-06-26 08:47:09.301 -----------------------------------------------
+eclipse.buildId=4.38.0.20251204-0849
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring -data /Users/hebee/JavaProject/Platter
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-26 08:47:10.474
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-26 08:47:11.229
+!MESSAGE Logback config file: /Users/hebee/JavaProject/Platter/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
+!SESSION 2026-06-27 09:33:59.644 -----------------------------------------------
+eclipse.buildId=4.38.0.20251204-0849
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse.epp.package.jee.product -keyring /Users/hebee/.eclipse_keyring -data /Users/hebee/JavaProject/Platter
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-27 09:34:00.721
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-06-27 09:34:01.429
+!MESSAGE Logback config file: /Users/hebee/JavaProject/Platter/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml

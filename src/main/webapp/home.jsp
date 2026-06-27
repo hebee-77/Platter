@@ -117,7 +117,7 @@
 				</a>
 
 				<!-- Cart Icon Button -->
-				<a href="#" class="nav-btn-icon" aria-label="Cart"
+				<a href="cart" class="nav-btn-icon" aria-label="Cart"
 					title="Shopping Cart"> <i class="fa-solid fa-bag-shopping"></i>
 					<span class="badge badge-secondary cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
 				</a>
@@ -209,7 +209,7 @@
 					class="fa-regular fa-heart"></i> Favorites
 					<span class="nav-badge fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
 				</a>
-				<a href="#" class="drawer-nav-item"><i
+				<a href="cart" class="drawer-nav-item"><i
 					class="fa-solid fa-bag-shopping"></i> My Cart
 					<span class="nav-badge sec cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
 				</a> <a href="#" class="drawer-nav-item"><i

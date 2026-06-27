@@ -6,6 +6,8 @@ public class CartItem {
 	private int dishId;
 	private int quantity;
 
+	private Dish dish;
+
 	public CartItem() {}
 
 	public CartItem(int cartItemId, int userId, int dishId, int quantity) {
@@ -13,6 +15,14 @@ public class CartItem {
 		this.userId     = userId;
 		this.dishId     = dishId;
 		this.quantity   = quantity;
+	}
+
+	public CartItem(int cartItemId, int userId, int dishId, int quantity, Dish dish) {
+		this.cartItemId = cartItemId;
+		this.userId     = userId;
+		this.dishId     = dishId;
+		this.quantity   = quantity;
+		this.dish       = dish;
 	}
 
 	public int getCartItemId() {
@@ -46,4 +56,13 @@ public class CartItem {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public Dish getDish() {
+		return dish;
+	}
+
+	public void setDish(Dish dish) {
+		this.dish = dish;
+	}
 }
+

@@ -9,12 +9,18 @@ import java.util.List;
 
 import com.DAO.CartDAO;
 import com.Model.CartItem;
+import com.Model.Dish;
 import com.Utility.DBConnection;
 
 public class CartDAOImpl implements CartDAO {
 
 	private static final String SELECT_BY_USER =
 			"SELECT cartItemId, userId, dishId, quantity FROM Platter.CartItem WHERE userId = ?";
+
+	private static final String SELECT_WITH_DETAILS_BY_USER =
+			"SELECT ci.cartItemId, ci.userId, ci.dishId, ci.quantity, " +
+			"d.name, d.restaurantName, d.price, d.rating, d.imagePath, d.description, d.calories, d.isVeg, d.orderCount, d.deliveryTime, d.distance, d.tag, d.section " +
+			"FROM Platter.CartItem ci JOIN Platter.Dish d ON ci.dishId = d.dishId WHERE ci.userId = ?";
 
 	private static final String ADD_OR_INCREMENT =
 			"INSERT INTO Platter.CartItem (userId, dishId, quantity) VALUES (?, ?, 1) " +
@@ -58,6 +64,52 @@ public class CartDAOImpl implements CartDAO {
 		}
 		return items;
 	}
+
+	@Override
+	public List<CartItem> getCartItemsWithDetailsByUser(int userId) {
+		List<CartItem> items = new ArrayList<>();
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement(SELECT_WITH_DETAILS_BY_USER)) {
+			ps.setInt(1, userId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					CartItem item = new CartItem();
+					item.setCartItemId(rs.getInt("cartItemId"));
+					item.setUserId(rs.getInt("userId"));
+					item.setDishId(rs.getInt("dishId"));
+					item.setQuantity(rs.getInt("quantity"));
+
+					Dish d = new Dish();
+					d.setDishId(rs.getInt("dishId"));
+					d.setName(rs.getString("name"));
+					d.setRestaurantName(rs.getString("restaurantName"));
+					d.setPrice(rs.getInt("price"));
+					d.setRating(rs.getDouble("rating"));
+					d.setImagePath(rs.getString("imagePath"));
+					d.setDescription(rs.getString("description"));
+					d.setCalories(rs.getString("calories"));
+					d.setVeg(rs.getBoolean("isVeg"));
+					d.setOrderCount(rs.getString("orderCount"));
+					d.setDeliveryTime(rs.getString("deliveryTime"));
+					double dist = rs.getDouble("distance");
+					if (rs.wasNull()) {
+						d.setDistance(null);
+					} else {
+						d.setDistance(dist);
+					}
+					d.setTag(rs.getString("tag"));
+					d.setSection(rs.getString("section"));
+
+					item.setDish(d);
+					items.add(item);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
+
 
 	@Override
 	public void addOrIncrement(int userId, int dishId) {
