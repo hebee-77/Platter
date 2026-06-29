@@ -1,6 +1,7 @@
 <!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> -->
 
-<%@ page import="com.Model.User, com.Model.Restaurant, com.Model.Dish, java.util.List"%>
+<%@ page
+	import="com.Model.User, com.Model.Restaurant, com.Model.Dish, java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,15 +26,10 @@
 </head>
 
 <body>
-<%
-	User loggedInUser = (User) session.getAttribute("loggedInUser");
-	int favCount = 0;
-	int cartCount = 0;
-	if (loggedInUser != null) {
-		favCount = new com.DAOImpl.FavoriteDAOImpl().getFavoritesCount(loggedInUser.getUserId());
-		cartCount = new com.DAOImpl.CartDAOImpl().getCartItemCount(loggedInUser.getUserId());
-	}
-%>
+	<% User loggedInUser=(User) session.getAttribute("loggedInUser"); int favCount=0; int cartCount=0; if
+			(loggedInUser !=null) { favCount=new
+			com.DAOImpl.FavoriteDAOImpl().getFavoritesCount(loggedInUser.getUserId()); cartCount=new
+			com.DAOImpl.CartDAOImpl().getCartItemCount(loggedInUser.getUserId()); } %>
 
 	<!-- Background Decorative Blobs -->
 	<div class="blur blob-1"></div>
@@ -72,18 +68,20 @@
 					<!-- Location Dropdown Menu -->
 					<div class="location-dropdown" id="locationDropdown">
 						<div class="dropdown-header">Select Address</div>
-						
+
 						<!-- Searchable Input Field -->
 						<div class="location-search-box">
-							<i class="fa-solid fa-magnifying-glass"></i>
-							<input type="text" id="locationSearchInput" placeholder="Search delivery location..." autocomplete="off">
+							<i class="fa-solid fa-magnifying-glass"></i> <input type="text"
+								id="locationSearchInput"
+								placeholder="Search delivery location..." autocomplete="off">
 						</div>
 
 						<div class="dropdown-divider"></div>
-						
+
 						<!-- List container for locations -->
 						<div class="location-list" id="locationList">
-							<div class="dropdown-item active" data-location="Whitefield, Bangalore">
+							<div class="dropdown-item active"
+								data-location="Whitefield, Bangalore">
 								<i class="fa-solid fa-house"></i>
 								<div class="item-text">
 									<strong>Home</strong> <span>Whitefield, Bangalore</span>
@@ -96,7 +94,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="dropdown-divider"></div>
 						<button class="locate-me-btn" id="locateMeBtn">
 							<i class="fa-solid fa-location-crosshairs"></i> Locate Me
@@ -112,28 +110,32 @@
 
 				<!-- Favorites Icon Button -->
 				<a href="favorites" class="nav-btn-icon" aria-label="Favorites"
-					title="Favorites"> <i class="fa-regular fa-heart"></i>
-					<span class="badge badge-primary fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
+					title="Favorites"> <i class="fa-regular fa-heart"></i> <span
+					class="badge badge-primary fav-badge-count"
+					<%=favCount==0 ? "style=\" display:none;\"" : "" %>><%= favCount %></span>
 				</a>
 
 				<!-- Cart Icon Button -->
 				<a href="cart" class="nav-btn-icon" aria-label="Cart"
 					title="Shopping Cart"> <i class="fa-solid fa-bag-shopping"></i>
-					<span class="badge badge-secondary cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
+					<span class="badge badge-secondary cart-badge-count"
+					<%=cartCount==0 ? "style=\" display:none;\"" : "" %>><%= cartCount %></span>
 				</a>
 
 				<!-- Profile Button -->
-				<%
-				// loggedInUser is already declared at the top of the body
-				%>
+				<% // loggedInUser is already declared at the top of the body %>
 				<div class="profile-container" id="profileTrigger">
 					<button class="profile-avatar-btn" aria-label="User profile">
-						<div class="avatar-initials"><%=loggedInUser.getName().toUpperCase().charAt(0)%></div>
+						<div class="avatar-initials">
+							<%=loggedInUser.getName().toUpperCase().charAt(0)%>
+						</div>
 					</button>
 					<!-- Profile Dropdown -->
 					<div class="profile-dropdown" id="profileDropdown">
 						<div class="profile-dropdown-header">
-							<strong><%=loggedInUser.getName()%></strong> <span><%=loggedInUser.getEmail()%></span>
+							<strong> <%=loggedInUser.getName()%>
+							</strong> <span> <%=loggedInUser.getEmail()%>
+							</span>
 						</div>
 						<div class="dropdown-divider"></div>
 						<a href="#" class="profile-item"><i class="fa-regular fa-user"></i>
@@ -206,12 +208,15 @@
 			<!-- Mobile Links -->
 			<nav class="drawer-nav">
 				<a href="favorites" class="drawer-nav-item"><i
-					class="fa-regular fa-heart"></i> Favorites
-					<span class="nav-badge fav-badge-count" <%= favCount == 0 ? "style=\"display: none;\"" : "" %>><%= favCount %></span>
-				</a>
-				<a href="cart" class="drawer-nav-item"><i
-					class="fa-solid fa-bag-shopping"></i> My Cart
-					<span class="nav-badge sec cart-badge-count" <%= cartCount == 0 ? "style=\"display: none;\"" : "" %>><%= cartCount %></span>
+					class="fa-regular fa-heart"></i> Favorites <span
+					class="nav-badge fav-badge-count"
+					<%=favCount==0 ? "style=\" display: none;\"" : ""
+								%>><%= favCount %></span>
+				</a> <a href="cart" class="drawer-nav-item"><i
+					class="fa-solid fa-bag-shopping"></i> My Cart <span
+					class="nav-badge sec cart-badge-count"
+					<%=cartCount==0 ? "style=\" display: none;\""
+								: "" %>><%= cartCount %></span>
 				</a> <a href="#" class="drawer-nav-item"><i
 					class="fa-regular fa-user"></i> My Profile</a> <a href="#"
 					class="drawer-nav-item"><i class="fa-solid fa-ticket"></i>
@@ -222,7 +227,8 @@
 			</nav>
 		</div>
 		<div class="drawer-footer">
-			<button class="drawer-logout-btn" onclick="window.location.href='logout'">
+			<button class="drawer-logout-btn"
+				onclick="window.location.href='logout'">
 				<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
 			</button>
 		</div>
@@ -370,7 +376,8 @@
 
 			<div class="categories-track" id="categoriesTrack">
 				<!-- Pizza -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Pizza'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Pizza'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/pizza.png" alt="Pizza"
 							class="category-circle-img">
@@ -380,7 +387,8 @@
 				</div>
 
 				<!-- Burger -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Burger'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Burger'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/burger.png" alt="Burger"
 							class="category-circle-img">
@@ -390,7 +398,8 @@
 				</div>
 
 				<!-- Chinese -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Chinese'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Chinese'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/chinese.png" alt="Chinese"
 							class="category-circle-img">
@@ -400,7 +409,8 @@
 				</div>
 
 				<!-- Biryani -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Biryani'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Biryani'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/biryani.png" alt="Biryani"
 							class="category-circle-img">
@@ -410,7 +420,8 @@
 				</div>
 
 				<!-- Coffee -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Coffee'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Coffee'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/coffee.png" alt="Coffee"
 							class="category-circle-img">
@@ -420,7 +431,8 @@
 				</div>
 
 				<!-- Desserts -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Desserts'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Desserts'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/dessert.png" alt="Desserts"
 							class="category-circle-img">
@@ -430,7 +442,8 @@
 				</div>
 
 				<!-- Healthy -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Healthy'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Healthy'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/healthy.png" alt="Healthy"
 							class="category-circle-img">
@@ -440,7 +453,8 @@
 				</div>
 
 				<!-- Indian -->
-				<div class="category-card-item" onclick="window.location.href='category?name=Indian'">
+				<div class="category-card-item"
+					onclick="window.location.href='category?name=Indian'">
 					<div class="category-circle-wrapper">
 						<img src="images/categories/indian.png" alt="Indian"
 							class="category-circle-img">
@@ -464,17 +478,15 @@
 			</div>
 
 			<div class="restaurants-grid">
-				<%
-				List<Restaurant> restaurantList = (List<Restaurant>) request.getAttribute("restaurantList");
-				if (restaurantList != null && !restaurantList.isEmpty()) {
-					int cardDelay = 0;
-					for (Restaurant r : restaurantList) {
-						cardDelay += 60;
-						String openStatusClass = r.isOpen() ? "status-open" : "status-closed";
-						String openStatusText  = r.isOpen() ? "Open Now"    : "Closed";
-				%>
-				<div class="rest-card"
-					style="animation-delay: <%= cardDelay %>ms;"
+				<% List<Restaurant> restaurantList = (List<Restaurant>) request.getAttribute("restaurantList");
+								if (restaurantList != null && !restaurantList.isEmpty()) {
+								int cardDelay = 0;
+								for (Restaurant r : restaurantList) {
+								cardDelay += 60;
+								String openStatusClass = r.isOpen() ? "status-open" : "status-closed";
+								String openStatusText = r.isOpen() ? "Open Now" : "Closed";
+								%>
+				<div class="rest-card" style="animation-delay: <%= cardDelay %>ms;"
 					data-name="<%= r.getName().toLowerCase() %>"
 					data-cuisine="<%= r.getCuisine().toLowerCase() %>"
 					data-rating="<%= r.getRating() %>"
@@ -483,30 +495,32 @@
 
 					<!-- Card Image -->
 					<div class="rest-card-img-wrap">
-						<img src="<%= r.getImagePath() %>" alt="<%= r.getName() %>" loading="lazy">
+						<img src="<%= r.getImagePath() %>" alt="<%= r.getName() %>"
+							loading="lazy">
 
 						<% if (r.isTopRated()) { %>
-							<span class="rest-badge-top badge-top-rated">
-								<i class="fa-solid fa-star"></i> Top Rated
-							</span>
+						<span class="rest-badge-top badge-top-rated"> <i
+							class="fa-solid fa-star"></i> Top Rated
+						</span>
 						<% } else { %>
-							<span class="rest-badge-top badge-popular">
-								<i class="fa-solid fa-fire"></i> Popular
-							</span>
+						<span class="rest-badge-top badge-popular"> <i
+							class="fa-solid fa-fire"></i> Popular
+						</span>
 						<% } %>
 
-						<span class="rest-open-status <%= openStatusClass %>"><%= openStatusText %></span>
+						<span class="rest-open-status <%= openStatusClass %>"> <%= openStatusText %>
+						</span>
 
-						<%
-							boolean isFavRest = false;
-							if (loggedInUser != null) {
-								isFavRest = new com.DAOImpl.FavoriteDAOImpl().isRestaurantFavorite(loggedInUser.getUserId(), r.getRestaurantId());
-							}
-							String favRestClass = isFavRest ? "rest-fav-btn is-fav" : "rest-fav-btn";
-							String favRestIcon = isFavRest ? "fa-solid fa-heart" : "fa-regular fa-heart";
-							String favRestTitle = isFavRest ? "Remove from favourites" : "Add to favourites";
-						%>
-						<button class="<%= favRestClass %>" data-restaurant-id="<%= r.getRestaurantId() %>" aria-label="<%= favRestTitle %>" title="<%= favRestTitle %>">
+						<% boolean isFavRest=false; if (loggedInUser !=null) { isFavRest=new
+														com.DAOImpl.FavoriteDAOImpl().isRestaurantFavorite(loggedInUser.getUserId(),
+														r.getRestaurantId()); } String favRestClass=isFavRest
+														? "rest-fav-btn is-fav" : "rest-fav-btn" ; String
+														favRestIcon=isFavRest ? "fa-solid fa-heart"
+														: "fa-regular fa-heart" ; String favRestTitle=isFavRest
+														? "Remove from favourites" : "Add to favourites" ; %>
+						<button class="<%= favRestClass %>"
+							data-restaurant-id="<%= r.getRestaurantId() %>"
+							aria-label="<%= favRestTitle %>" title="<%= favRestTitle %>">
 							<i class="<%= favRestIcon %>"></i>
 						</button>
 					</div>
@@ -515,44 +529,46 @@
 					<div class="rest-card-body">
 
 						<div class="rest-card-row1">
-							<h3 class="rest-card-name"><%= r.getName() %></h3>
+							<h3 class="rest-card-name">
+								<%= r.getName() %>
+							</h3>
 							<div class="rest-rating-chip">
-								<i class="fa-solid fa-star"></i>
-								<span><%= r.getRating() %></span>
+								<i class="fa-solid fa-star"></i> <span> <%= r.getRating() %>
+								</span>
 							</div>
 						</div>
 
-						<p class="rest-cuisine"><%= r.getCuisine() %></p>
+						<p class="rest-cuisine">
+							<%= r.getCuisine() %>
+						</p>
 
 						<div class="rest-meta-row-premium">
-							<span><%= r.getDeliveryTime() %> mins</span>
-							<span class="meta-dot">&bull;</span>
-							<span>&#8377;<%= r.getCostForOne() %> for two</span>
+							<span> <%= r.getDeliveryTime() %> mins
+							</span> <span class="meta-dot">&bull;</span> <span>&#8377;<%= r.getCostForOne() %>
+								for two
+							</span>
 						</div>
 
 						<div class="rest-delivery-row">
 							<% if (r.isFreeDelivery()) { %>
-								<span class="delivery-status free"><span class="status-dot">🟢</span> Free Delivery</span>
+							<span class="delivery-status free"><span
+								class="status-dot">🟢</span> Free Delivery</span>
 							<% } else { %>
-								<span class="delivery-status paid"><span class="status-dot">🟠</span> &#8377;40 Delivery</span>
+							<span class="delivery-status paid"><span
+								class="status-dot">🟠</span> &#8377;40 Delivery</span>
 							<% } %>
 						</div>
 
-						<button class="rest-view-btn" onclick="window.location.href='menu?id=<%= r.getRestaurantId() %>'">
-							<i class="fa-solid fa-utensils"></i>
-							<span>View Menu</span>
+						<button class="rest-view-btn"
+							onclick="window.location.href='menu?id=<%= r.getRestaurantId() %>'">
+							<i class="fa-solid fa-utensils"></i> <span>View Menu</span>
 						</button>
 
 					</div>
 				</div>
-				<%
-					}
-				} else {
-				%>
+				<% } } else { %>
 				<p>No restaurants available.</p>
-				<%
-				}
-				%>
+				<% } %>
 			</div>
 		</div>
 	</section>
@@ -569,46 +585,54 @@
 			</div>
 
 			<div class="dishes-grid">
-				<%
-				List<Dish> recommendedDishes = (List<Dish>) request.getAttribute("recommendedDishes");
-				if (recommendedDishes != null && !recommendedDishes.isEmpty()) {
-					for (Dish d : recommendedDishes) {
-				%>
+				<% List<Dish> recommendedDishes = (List<Dish>) request.getAttribute("recommendedDishes");
+								if (recommendedDishes != null && !recommendedDishes.isEmpty()) {
+								for (Dish d : recommendedDishes) {
+								%>
 				<div class="dish-card-item">
 					<div class="dish-image-container">
 						<img src="<%= d.getImagePath() %>" alt="<%= d.getName() %>"
-							class="dish-cover-img"> 
-						<% if (d.getTag() != null && !d.getTag().isEmpty()) { %>
-							<span class="dish-badge badge-trending">
-								<i class="fa-solid fa-fire"></i> <%= d.getTag() %>
-							</span>
+							class="dish-cover-img">
+						<% if (d.getTag() !=null && !d.getTag().isEmpty()) { %>
+						<span class="dish-badge badge-trending"> <i
+							class="fa-solid fa-fire"></i> <%= d.getTag() %>
+						</span>
 						<% } %>
-						<div class="dish-indicator <%= d.isVeg() ? "veg" : "non-veg" %>" title="<%= d.isVeg() ? "Vegetarian" : "Non-Vegetarian" %>">
+						<div class="dish-indicator <%= d.isVeg() ? " veg" : "non-veg" %>"
+							title="<%= d.isVeg() ? "Vegetarian" : "Non-Vegetarian" %>">
 							<span class="dot"></span>
 						</div>
-						<%
-							boolean isFavDish = false;
-							if (loggedInUser != null) {
-								isFavDish = new com.DAOImpl.FavoriteDAOImpl().isDishFavorite(loggedInUser.getUserId(), d.getDishId());
-							}
-							String favDishClass = isFavDish ? "dish-wishlist-btn active" : "dish-wishlist-btn";
-							String favDishIcon = isFavDish ? "fa-solid fa-heart" : "fa-regular fa-heart";
-							String favDishTitle = isFavDish ? "Remove from wishlist" : "Add to Wishlist";
-						%>
-						<button class="<%= favDishClass %>" data-dish-id="<%= d.getDishId() %>" aria-label="<%= favDishTitle %>" title="<%= favDishTitle %>">
+						<% boolean isFavDish=false; if (loggedInUser !=null) { isFavDish=new
+													com.DAOImpl.FavoriteDAOImpl().isDishFavorite(loggedInUser.getUserId(),
+													d.getDishId()); } String favDishClass=isFavDish
+													? "dish-wishlist-btn active" : "dish-wishlist-btn" ; String
+													favDishIcon=isFavDish ? "fa-solid fa-heart" : "fa-regular fa-heart"
+													; String favDishTitle=isFavDish ? "Remove from wishlist"
+													: "Add to Wishlist" ; %>
+						<button class="<%= favDishClass %>"
+							data-dish-id="<%= d.getDishId() %>"
+							aria-label="<%= favDishTitle %>" title="<%= favDishTitle %>">
 							<i class="<%= favDishIcon %>"></i>
 						</button>
 					</div>
 					<div class="dish-details-container">
 						<div class="dish-first-row">
-							<h3 class="dish-name-title"><%= d.getName() %></h3>
-							<span class="dish-calories"><%= d.getCalories() %></span>
+							<h3 class="dish-name-title">
+								<%= d.getName() %>
+							</h3>
+							<span class="dish-calories"> <%= d.getCalories() %>
+							</span>
 						</div>
-						<p class="dish-restaurant-name"><%= d.getRestaurantName() %></p>
-						<p class="dish-short-desc"><%= d.getDescription() %></p>
+						<p class="dish-restaurant-name">
+							<%= d.getRestaurantName() %>
+						</p>
+						<p class="dish-short-desc">
+							<%= d.getDescription() %>
+						</p>
 						<div class="dish-meta-row">
 							<div class="dish-rating-badge">
-								<i class="fa-solid fa-star"></i> <%= d.getRating() %>
+								<i class="fa-solid fa-star"></i>
+								<%= d.getRating() %>
 							</div>
 							<span class="dish-price-tag">₹<%= d.getPrice() %></span>
 						</div>
@@ -631,14 +655,9 @@
 						</div>
 					</div>
 				</div>
-				<%
-					}
-				} else {
-				%>
+				<% } } else { %>
 				<p>No recommended dishes available.</p>
-				<%
-				}
-				%>
+				<% } %>
 			</div>
 		</div>
 	</section>
@@ -673,66 +692,63 @@
 
 				<div class="trending-slider-track-container">
 					<div class="trending-slider-track">
-						<%
-						List<Dish> trendingDishes = (List<Dish>) request.getAttribute("trendingDishes");
-						if (trendingDishes != null && !trendingDishes.isEmpty()) {
-							for (Dish d : trendingDishes) {
-								String badgeClass = "badge-now";
-								String iconClass = "fa-fire";
-								if ("Most Loved".equalsIgnoreCase(d.getTag())) {
-									badgeClass = "badge-loved";
-									iconClass = "fa-heart";
-								} else if ("Top Rated".equalsIgnoreCase(d.getTag())) {
-									badgeClass = "badge-rated";
-									iconClass = "fa-trophy";
-								} else if ("Customer Favorite".equalsIgnoreCase(d.getTag())) {
-									badgeClass = "badge-favorite";
-									iconClass = "fa-thumbs-up";
-								}
-						%>
+						<% List<Dish> trendingDishes = (List<Dish>) request.getAttribute("trendingDishes");
+										if (trendingDishes != null && !trendingDishes.isEmpty()) {
+										for (Dish d : trendingDishes) {
+										String badgeClass = "badge-now";
+										String iconClass = "fa-fire";
+										if ("Most Loved".equalsIgnoreCase(d.getTag())) {
+										badgeClass = "badge-loved";
+										iconClass = "fa-heart";
+										} else if ("Top Rated".equalsIgnoreCase(d.getTag())) {
+										badgeClass = "badge-rated";
+										iconClass = "fa-trophy";
+										} else if ("Customer Favorite".equalsIgnoreCase(d.getTag())) {
+										badgeClass = "badge-favorite";
+										iconClass = "fa-thumbs-up";
+										}
+										%>
 						<div class="trending-card-item">
 							<div class="trending-image-container">
-								<img src="<%= d.getImagePath() %>"
-									alt="<%= d.getName() %>" class="trending-cover-img"> 
-								<% if (d.getTag() != null && !d.getTag().isEmpty()) { %>
-									<span class="trending-badge <%= badgeClass %>">
-										<i class="fa-solid <%= iconClass %>"></i> <%= d.getTag() %>
-									</span>
+								<img src="<%= d.getImagePath() %>" alt="<%= d.getName() %>"
+									class="trending-cover-img">
+								<% if (d.getTag() !=null && !d.getTag().isEmpty()) { %>
+								<span class="trending-badge <%= badgeClass %>"> <i
+									class="fa-solid <%= iconClass %>"></i> <%= d.getTag() %>
+								</span>
 								<% } %>
 							</div>
 							<div class="trending-details-container">
 								<div class="trending-restaurant-row">
 									<span class="trending-restaurant-name"><i
-										class="fa-solid fa-store"></i> <%= d.getRestaurantName() %></span> 
-									<span class="trending-rating-badge">
-										<i class="fa-solid fa-star"></i> <%= d.getRating() %>
+										class="fa-solid fa-store"></i> <%= d.getRestaurantName() %> </span> <span
+										class="trending-rating-badge"> <i
+										class="fa-solid fa-star"></i> <%= d.getRating() %>
 									</span>
 								</div>
-								<h3 class="trending-dish-name"><%= d.getName() %></h3>
+								<h3 class="trending-dish-name">
+									<%= d.getName() %>
+								</h3>
 
 								<div class="trending-orders-row">
-									<i class="fa-solid fa-arrow-trend-up"></i> 
-									<span><%= d.getOrderCount() %></span>
+									<i class="fa-solid fa-arrow-trend-up"></i> <span> <%= d.getOrderCount() %>
+									</span>
 								</div>
 
 								<div class="trending-footer-row">
 									<div class="trending-meta-details">
-										<span><i class="fa-regular fa-clock"></i> <%= d.getDeliveryTime() %></span> 
-										<span class="separator">•</span> 
-										<span><i class="fa-solid fa-location-dot"></i> <%= d.getDistance() %> km</span>
+										<span><i class="fa-regular fa-clock"></i> <%= d.getDeliveryTime() %>
+										</span> <span class="separator">•</span> <span><i
+											class="fa-solid fa-location-dot"></i> <%= d.getDistance() %>
+											km </span>
 									</div>
 									<span class="trending-price-tag">₹<%= d.getPrice() %></span>
 								</div>
 							</div>
 						</div>
-						<%
-							}
-						} else {
-						%>
+						<% } } else { %>
 						<p>No trending dishes available.</p>
-						<%
-						}
-						%>
+						<% } %>
 					</div>
 				</div>
 			</div>
