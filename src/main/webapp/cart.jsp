@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css?v=1.1.0">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css?v=<%= System.currentTimeMillis() %>">
 </head>
 
 <body>
@@ -82,7 +82,7 @@
         </div>
 
         <% if (cartItems != null && !cartItems.isEmpty()) { %>
-        <form action="${pageContext.request.contextPath}/checkout" method="post" class="cart-grid">
+        <div class="cart-grid">
 
             <!-- Cart Items List (Scrolls internally if items overflow) -->
             <section class="cart-items-wrapper" id="cartItemsList">
@@ -116,15 +116,19 @@
                     </div>
 
                     <div class="cart-item-controls">
-                        <div class="stepper">
-                            <button type="button" class="stepper-btn qty-decrease" aria-label="Decrease quantity">&minus;</button>
-                            <span class="qty-val"><%= item.getQuantity() %></span>
-                            <button type="button" class="stepper-btn qty-increase" aria-label="Increase quantity">+</button>
-                        </div>
-                        <span class="cart-item-line-total">₹<%= lineTotal %></span>
-                        <button type="button" class="remove-btn" aria-label="Remove item">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </button>
+                        <form action="${pageContext.request.contextPath}/cart-action" method="post" class="cart-action-form">
+                            <input type="hidden" name="dishId" value="<%= item.getDishId() %>">
+                            <input type="hidden" name="redirect" value="cart">
+                            <div class="stepper">
+                                <button type="submit" name="action" value="decrement" class="stepper-btn qty-decrease" aria-label="Decrease quantity">&minus;</button>
+                                <span class="qty-val"><%= item.getQuantity() %></span>
+                                <button type="submit" name="action" value="increment" class="stepper-btn qty-increase" aria-label="Increase quantity">+</button>
+                            </div>
+                            <span class="cart-item-line-total">₹<%= lineTotal %></span>
+                            <button type="submit" name="action" value="remove" class="remove-btn" aria-label="Remove item">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <% } %>
@@ -132,67 +136,112 @@
 
             <!-- Summary Sidebar -->
             <aside class="cart-summary-sidebar">
-
-                <div class="summary-card">
-                    <h2>Order Summary</h2>
-                    <div class="summary-row">
-                        <span>Subtotal</span>
-                        <span id="subtotal">₹<%= cartTotal %></span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Delivery fee</span>
-                        <span id="deliveryFee">₹<%= deliveryFee %></span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Taxes &amp; fees (5%)</span>
-                        <span id="taxes">₹<%= taxes %></span>
-                    </div>
-                    <div class="summary-row total-row">
-                        <span>Total Amount</span>
-                        <span id="total">₹<%= grandTotal %></span>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <h2>
-                        Delivery Address
-                        <a href="#" class="btn-secondary-action" style="padding: 3px 10px; font-size: 11px;">Change</a>
-                    </h2>
-                    <div class="delivery-address-box">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <div class="address-info">
-                            <strong>Home</strong>
-                            <span>221B Baker Street, Central Avenue, City</span>
+                <form action="${pageContext.request.contextPath}/checkout" method="post" class="summary-card unified-checkout-card">
+                    
+                    <!-- Section 1: Order Summary -->
+                    <div class="summary-section">
+                        <h2 class="section-title">Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹<%= cartTotal %></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery fee</span>
+                            <span id="deliveryFee">₹<%= deliveryFee %></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Taxes &amp; fees (5%)</span>
+                            <span id="taxes">₹<%= taxes %></span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span>Total Amount</span>
+                            <span id="total">₹<%= grandTotal %></span>
                         </div>
                     </div>
-                    <input type="hidden" name="addressId" value="1">
-                </div>
 
-                <div class="summary-card">
-                    <h2>Payment Method</h2>
-                    <div class="payment-options">
-                        <label class="payment-option-label">
-                            <input type="radio" name="paymentMethod" value="cod" checked>
-                            <i class="fa-solid fa-money-bill-wave"></i> Cash on Delivery
-                        </label>
-                        <label class="payment-option-label">
-                            <input type="radio" name="paymentMethod" value="card">
-                            <i class="fa-solid fa-credit-card"></i> Credit / Debit Card
-                        </label>
-                        <label class="payment-option-label">
-                            <input type="radio" name="paymentMethod" value="upi">
-                            <i class="fa-solid fa-qrcode"></i> UPI / Net Banking
-                        </label>
+                    <div class="card-divider"></div>
+
+                    <!-- Section 2: Delivery Address -->
+                    <div class="summary-section">
+                        <div class="section-header-row">
+                            <h2 class="section-title">Delivery Address</h2>
+                            <a href="#" class="address-change-btn">Change</a>
+                        </div>
+                        <div class="delivery-address-box">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div class="address-info">
+                                <strong>Home</strong>
+                                <span>221B Baker Street, Central Avenue, City</span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="addressId" value="1">
                     </div>
-                </div>
 
-                <button type="submit" class="btn-checkout">
-                    Place Order <i class="fa-solid fa-arrow-right"></i>
-                </button>
+                    <div class="card-divider"></div>
 
+                    <!-- Section 3: Payment Method -->
+                    <div class="summary-section">
+                        <h2 class="section-title">Payment Method</h2>
+                        <div class="payment-options-list">
+                            <label class="payment-option-card">
+                                <input type="radio" name="paymentMethod" value="cod" checked>
+                                <div class="payment-option-inner">
+                                    <div class="payment-icon-wrapper cod-icon">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-title">Cash on Delivery</span>
+                                        <span class="payment-subtitle">Pay with cash upon delivery</span>
+                                    </div>
+                                    <div class="payment-check-indicator">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="payment-option-card">
+                                <input type="radio" name="paymentMethod" value="card">
+                                <div class="payment-option-inner">
+                                    <div class="payment-icon-wrapper card-icon">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-title">Credit / Debit Card</span>
+                                        <span class="payment-subtitle">Visa, Mastercard, RuPay</span>
+                                    </div>
+                                    <div class="payment-check-indicator">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="payment-option-card">
+                                <input type="radio" name="paymentMethod" value="upi">
+                                <div class="payment-option-inner">
+                                    <div class="payment-icon-wrapper upi-icon">
+                                        <i class="fa-solid fa-qrcode"></i>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-title">UPI / Net Banking</span>
+                                        <span class="payment-subtitle">Google Pay, PhonePe, Paytm</span>
+                                    </div>
+                                    <div class="payment-check-indicator">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Checkout Button -->
+                    <button type="submit" class="btn-checkout">
+                        Place Order <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
             </aside>
 
-        </form>
+        </div>
         <% } %>
 
         <!-- Empty Cart Card -->

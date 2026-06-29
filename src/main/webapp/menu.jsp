@@ -13,15 +13,21 @@ Restaurant restaurant = (Restaurant) request.getAttribute("restaurant");
 User loggedInUser = (User) session.getAttribute("loggedInUser");
 int favCount = 0;
 int cartCount = 0;
+int cartTotal = 0;
+List<com.Model.CartItem> userCartItems = null;
 if (loggedInUser != null) {
 	favCount = new com.DAOImpl.FavoriteDAOImpl().getFavoritesCount(loggedInUser.getUserId());
-	cartCount = new com.DAOImpl.CartDAOImpl().getCartItemCount(loggedInUser.getUserId());
+	com.DAO.CartDAO cDao = new com.DAOImpl.CartDAOImpl();
+	cartCount = cDao.getCartItemCount(loggedInUser.getUserId());
+	cartTotal = cDao.getCartTotal(loggedInUser.getUserId());
+	userCartItems = cDao.getCartItemsByUser(loggedInUser.getUserId());
 }
 List<Dish> dishes = (List<Dish>) request.getAttribute("dishes");
 Integer dishCount = (Integer) request.getAttribute("dishCount");
 if (dishCount == null)
 	dishCount = 0;
 String restName = (restaurant != null) ? restaurant.getName() : "Restaurant";
+int restId = (restaurant != null) ? restaurant.getRestaurantId() : 0;
 %>
 <title>Platter | <%=restName%> — Menu
 </title>
@@ -482,21 +488,41 @@ String restName = (restaurant != null) ? restaurant.getName() : "Restaurant";
 								<i class="<%=favDishIcon%>"></i>
 							</button>
 							<div class="dish-add-wrap">
-								<button class="add-to-cart-btn" id="addBtn-<%=d.getDishId()%>"
-									onclick="handleAddToCart(<%=d.getDishId()%>)">
-									<i class="fa-solid fa-plus"></i> Add
-								</button>
-								<div class="qty-selector" id="qtySel-<%=d.getDishId()%>">
-									<button class="qty-btn"
-										onclick="changeQty(<%=d.getDishId()%>, -1)">
-										<i class="fa-solid fa-minus"></i>
+							<%
+							int itemQty = 0;
+							if (userCartItems != null) {
+								for (com.Model.CartItem ci : userCartItems) {
+									if (ci.getDishId() == d.getDishId()) {
+										itemQty = ci.getQuantity();
+										break;
+									}
+								}
+							}
+							%>
+							<% if (itemQty == 0) { %>
+								<form action="${pageContext.request.contextPath}/cart-action" method="post" style="margin:0;">
+									<input type="hidden" name="dishId" value="<%= d.getDishId() %>">
+									<input type="hidden" name="action" value="add">
+									<input type="hidden" name="redirect" value="menu?id=<%= restId %>">
+									<button type="submit" class="add-to-cart-btn" id="addBtn-<%=d.getDishId()%>">
+										<i class="fa-solid fa-plus"></i> Add
 									</button>
-									<span class="qty-num" id="qtyNum-<%=d.getDishId()%>">1</span>
-									<button class="qty-btn"
-										onclick="changeQty(<%=d.getDishId()%>, 1)">
-										<i class="fa-solid fa-plus"></i>
-									</button>
-								</div>
+								</form>
+							<% } else { %>
+								<form action="${pageContext.request.contextPath}/cart-action" method="post" style="margin:0;">
+									<input type="hidden" name="dishId" value="<%= d.getDishId() %>">
+									<input type="hidden" name="redirect" value="menu?id=<%= restId %>">
+									<div class="qty-selector visible" id="qtySel-<%=d.getDishId()%>">
+										<button type="submit" name="action" value="decrement" class="qty-btn" aria-label="Decrease quantity">
+											<i class="fa-solid fa-minus"></i>
+										</button>
+										<span class="qty-num" id="qtyNum-<%=d.getDishId()%>"><%= itemQty %></span>
+										<button type="submit" name="action" value="increment" class="qty-btn" aria-label="Increase quantity">
+											<i class="fa-solid fa-plus"></i>
+										</button>
+									</div>
+								</form>
+							<% } %>
 							</div>
 						</div>
 
@@ -520,19 +546,18 @@ String restName = (restaurant != null) ? restaurant.getName() : "Restaurant";
 		%>
 
 		<!-- Fixed Cart Bar -->
-		<div class="menu-cart-bar" id="menuCartBar">
+		<div class="menu-cart-bar <% if (cartCount > 0) { %>visible-bar<% } %>" id="menuCartBar" style="<% if (cartCount > 0) { %>display: flex;<% } else { %>display: none;<% } %>">
 			<div class="cart-bar-left">
 				<div class="cart-icon-badge">
 					<i class="fa-solid fa-bag-shopping"></i> <span
-						class="cart-count-dot" id="cartBadgeNum">0</span>
+						class="cart-count-dot" id="cartBadgeNum"><%= cartCount %></span>
 				</div>
 				<div class="cart-bar-text">
-					<span class="cart-bar-count-text" id="cartBarCount">0 items
-						added</span> <span class="cart-bar-names" id="cartBarNames"></span>
+					<span class="cart-bar-count-text" id="cartBarCount"><%= cartCount %> items added</span>
 				</div>
 			</div>
 			<div class="cart-bar-mid">
-				<span class="cart-bar-total-amount" id="cartBarTotal">&#8377;0</span>
+				<span class="cart-bar-total-amount" id="cartBarTotal">&#8377;<%= cartTotal %></span>
 				<span class="cart-bar-delivery-est">Estimated delivery: <%=restaurant != null && restaurant.getDeliveryTime() != null ? restaurant.getDeliveryTime() : "30 min"%>
 				</span>
 			</div>
@@ -804,49 +829,6 @@ String restName = (restaurant != null) ? restaurant.getName() : "Restaurant";
                     if (count > 0) { bar.style.display = 'flex'; document.body.classList.add('has-cart'); }
                     else { bar.style.display = 'none'; document.body.classList.remove('has-cart'); }
                 }
-
-                async function handleAddToCart(dishId) {
-                    try {
-                        var res = await fetch('cart-api', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: 'dishId=' + dishId + '&action=add'
-                        });
-                        if (!res.ok) return;
-                        var data = await res.json();
-                        showStepperState(dishId, data.newQty);
-                        updateCartBar(data.cartItemCount, data.cartTotal);
-                    } catch (err) { console.error('Cart error:', err); }
-                }
-
-                async function changeQty(dishId, delta) {
-                    try {
-                        var res = await fetch('cart-api', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: 'dishId=' + dishId + '&action=' + (delta > 0 ? 'increment' : 'decrement')
-                        });
-                        if (!res.ok) return;
-                        var data = await res.json();
-                        if (data.newQty <= 0) revertToAddButton(dishId);
-                        else document.getElementById('qtyNum-' + dishId).textContent = data.newQty;
-                        updateCartBar(data.cartItemCount, data.cartTotal);
-                    } catch (err) { console.error('Cart error:', err); }
-                }
-
-                /* ── Restore cart state from server on page load ── */
-                (function () {
-                    fetch('cart-api', { method: 'GET' })
-                        .then(function (res) { return res.ok ? res.json() : null; })
-                        .then(function (data) {
-                            if (!data) return;
-                            if (data.items && Array.isArray(data.items)) {
-                                data.items.forEach(function (item) { showStepperState(item.dishId, item.quantity); });
-                            }
-                            updateCartBar(data.cartItemCount, data.cartTotal);
-                        })
-                        .catch(function (err) { console.warn('Cart restore failed:', err); });
-                })();
             </script>
 
 </body>

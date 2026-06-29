@@ -17,6 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import com.DAO.CartDAO;
+import com.DAOImpl.CartDAOImpl;
+import com.Model.CartItem;
+import com.Model.User;
+
 @WebServlet("/menu")
 public class MenuServlet extends HttpServlet {
 
@@ -26,7 +31,8 @@ public class MenuServlet extends HttpServlet {
 
         // Auth guard — redirect to login if not logged in
         HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("loggedInUser") == null) {
+        User loggedInUser = (session != null) ? (User) session.getAttribute("loggedInUser") : null;
+        if (loggedInUser == null) {
             String idParam = req.getParameter("id");
             String redirectUrl = "index.jsp?showLogin=true&redirectTo=menu";
             if (idParam != null && !idParam.trim().isEmpty()) {
@@ -62,9 +68,17 @@ public class MenuServlet extends HttpServlet {
         DishDAO dishDao = new DishDAOImpl();
         List<Dish> dishes = dishDao.getDishesByRestaurantName(restaurant.getName());
 
+        CartDAO cartDao = new CartDAOImpl();
+        List<CartItem> userCartItems = cartDao.getCartItemsByUser(loggedInUser.getUserId());
+        int cartCount = cartDao.getCartItemCount(loggedInUser.getUserId());
+        int cartTotal = cartDao.getCartTotal(loggedInUser.getUserId());
+
         req.setAttribute("restaurant", restaurant);
         req.setAttribute("dishes", dishes);
         req.setAttribute("dishCount", dishes.size());
+        req.setAttribute("userCartItems", userCartItems);
+        req.setAttribute("cartCount", cartCount);
+        req.setAttribute("cartTotal", cartTotal);
 
         req.getRequestDispatcher("/menu.jsp").forward(req, resp);
     }
