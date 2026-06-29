@@ -11,5 +11,6 @@ public interface CartDAO {
 	void removeItem(int userId, int dishId);
 	int getCartItemCount(int userId);              // sum of all quantities for the user
 	int getCartTotal(int userId);                  // sum(quantity * price) via JOIN with Dish
+	void clearCart(int userId);
 }
 

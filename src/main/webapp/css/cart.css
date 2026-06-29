@@ -204,7 +204,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ---------- Cart Layout Grid (Fixed Frame) ---------- */
 .cart-grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 400px;
     gap: 20px;
     flex: 1;
     min-height: 0;
@@ -425,7 +425,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     flex-direction: column;
     height: auto;
-    margin-top: -55px;
+    margin-top: -65px;
 }
 
 .unified-checkout-card {
@@ -433,11 +433,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
-    padding: 14px 16px;
+    padding: 18px 20px;
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .summary-section {
@@ -531,7 +531,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .payment-options-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .payment-option-card {
@@ -556,24 +556,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .payment-option-inner {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 6px 10px;
+    gap: 12px;
+    padding: 9px 12px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     transition: var(--transition-smooth);
 }
 
 .payment-icon-wrapper {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 16px;
     color: var(--muted);
     flex-shrink: 0;
     transition: var(--transition-smooth);
@@ -587,21 +587,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .payment-title {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--text);
     line-height: 1.2;
 }
 
 .payment-subtitle {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--muted);
     line-height: 1.2;
-    margin-top: 1px;
+    margin-top: 2px;
 }
 
 .payment-check-indicator {
-    font-size: 15px;
+    font-size: 17px;
     color: rgba(255, 255, 255, 0.15);
     transition: var(--transition-smooth);
     flex-shrink: 0;
@@ -637,11 +637,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .btn-checkout {
     width: 100%;
-    padding: 11px 18px;
+    padding: 13px 20px;
     border-radius: var(--radius-pill);
     background: var(--brand-gradient);
     color: var(--background);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     display: flex;
     align-items: center;
@@ -649,7 +649,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 8px;
     box-shadow: 0 8px 20px rgba(28, 107, 106, 0.35);
     transition: var(--transition-smooth);
-    margin-top: 2px;
+    margin-top: 4px;
 }
 .btn-checkout:hover {
     transform: translateY(-2px);

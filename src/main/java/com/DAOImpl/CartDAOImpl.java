@@ -168,6 +168,9 @@ public class CartDAOImpl implements CartDAO {
 		return 0;
 	}
 
+	private static final String CLEAR_CART =
+			"DELETE FROM Platter.CartItem WHERE userId = ?";
+
 	@Override
 	public int getCartTotal(int userId) {
 		try (Connection con = DBConnection.getConnection();
@@ -180,5 +183,16 @@ public class CartDAOImpl implements CartDAO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public void clearCart(int userId) {
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement(CLEAR_CART)) {
+			ps.setInt(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
